@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
@@ -12,6 +13,7 @@ import { CarrouselComponent } from './carrousel/carrousel.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { NoticiasComponent } from './noticias/noticias.component';
+
 
 
 @NgModule({
@@ -29,6 +31,7 @@ import { NoticiasComponent } from './noticias/noticias.component';
     BrowserModule,
     NgbModule,
     AppRoutingModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
