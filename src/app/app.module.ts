@@ -8,6 +8,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { CarrouselComponent } from './carrousel/carrousel.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { HomeComponent } from './home/home.component';
+import { NoticiasComponent } from './noticias/noticias.component';
 
 
 @NgModule({
@@ -15,7 +19,11 @@ import { RegisterComponent } from './register/register.component';
     AppComponent,
     FooterComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CarrouselComponent,
+    NavbarComponent,
+    HomeComponent,
+    NoticiasComponent
   ],
   imports: [
     BrowserModule,
