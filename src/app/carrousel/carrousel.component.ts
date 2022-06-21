@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NoticiasService } from '../services/noticias.service';
+import { Noticia } from '../interfaces';
 
 @Component({
   selector: 'app-carrousel',
@@ -7,14 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CarrouselComponent implements OnInit {
 
-  constructor() { }
+  public Activas: Noticia[] = [];
+
+  constructor(private noticiasServ: NoticiasService) { }
 
 
   ngOnInit(): void {
 
-    
+    // Obtengo las noticias activas de la API y las guardo en una variable lcoal
+    this.noticiasServ.getNoticiasActivas().subscribe(
+      data => {
+        this.Activas = data;
+        console.log(this.Activas);
+      }
 
-
+    )
+  
   }
 
 }
