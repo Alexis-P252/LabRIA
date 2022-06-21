@@ -6,6 +6,11 @@ export interface Noticia{
     fechaCaducidad: string; 
 }
 
+export interface Noticia_cantidad{
+    list: Noticia[],
+    size: number;
+}
+
 export interface Documento{
     id: number;
     titulo: string;
