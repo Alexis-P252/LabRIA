@@ -4,6 +4,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { NoticiasComponent } from './noticias/noticias.component';
+import { VerNoticiaComponent } from './ver-noticia/ver-noticia.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,9 @@ const routes: Routes = [
   },
   {
     path: 'noticias', component: NoticiasComponent
+  },
+  {
+    path: 'noticia/:id', component: VerNoticiaComponent
   }
   
 ];

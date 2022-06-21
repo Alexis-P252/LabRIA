@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Noticia } from '../interfaces';
+import { Noticia, Noticia_cantidad } from '../interfaces';
 
 import { environment } from 'src/environments/environment';
 
@@ -18,13 +18,14 @@ export class NoticiasService {
   constructor(private http: HttpClient) { }
 
   getNoticiasActivas(){
-    return this.http.get(environment.api_url + "Noticias/Activas");
+    return this.http.get<Noticia[]>(environment.api_url + "Noticias/Activas");
 
   }
 
   getAllNoticias(limit: number, offset: number){
       
-    return this.http.get(environment.api_url + "Noticias/Paged/" + offset + "/" + limit);
+    return this.http.get<Noticia_cantidad>(environment.api_url + "Noticias/Paged/" + offset + "/" + limit);
+
   }
 
   getNoticia(id: number){
