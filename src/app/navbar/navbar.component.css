@@ -1,0 +1,33 @@
+#logo {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.nav-link {
+    border-bottom: 3px solid #f8f9fa;
+}
+
+.nav-link:hover {
+    border-bottom: 3px solid #00aeef;
+}
+
+.fa-user {
+    font-size: 20px;
+    color:  rgba(0,0,0,.55);
+}
+
+.cuenta{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: 40px;
+    border-radius: 5%;
+    background: transparent;
+    cursor:pointer;
+}
+
+a{
+    height: 40px;
+}

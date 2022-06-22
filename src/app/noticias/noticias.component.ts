@@ -34,8 +34,8 @@ export class NoticiasComponent implements OnInit {
   
 
   ngOnInit(): void {
-    // Obtengo las primeras nueve noticias
-    this.getAllNoticias(9,0);
+    // Obtengo las primeras seis noticias
+    this.getAllNoticias(6,0);
   }
 
 
