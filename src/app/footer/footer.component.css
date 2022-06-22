@@ -1,9 +1,7 @@
 footer{
-    background-color: #03071E;
-    position: fixed;
+    background: #00aeef;
     align-items: center;
     justify-content: center;
     bottom: 0;
     width: 100%;
-    
 }

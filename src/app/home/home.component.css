@@ -1,9 +1,10 @@
-.carrousel {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80%;
-    height: 200px;
-    position: relative;
-    overflow: hidden;
-  }
+.home{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mensaje-container{
+  margin: 10px;
+}

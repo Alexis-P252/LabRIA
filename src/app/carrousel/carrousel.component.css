@@ -1,5 +1,4 @@
-.picsum-img-wrapper{
-    height: 500px;
-    width: auto;
-
+.carrousel {
+    width: 100%;
+    margin: 0 !important;
 }
