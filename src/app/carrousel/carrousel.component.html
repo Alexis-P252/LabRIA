@@ -2,11 +2,12 @@
 
     <ng-template ngbSlide *ngFor="let activa of Activas">
       <div class="picsum-img-wrapper">
-        <img src="../../../assets/paisaje.jpg" alt="Random first slide">
+        <img src="../../../assets/paisaje.jpg" alt="Random first slide" width="100%" height="auto">
       </div>
       <div class="carousel-caption">
         <h3>{{activa.titulo}}</h3>
         <p>{{activa.descripcion}}</p>
+        <button class="btn btn-light">Ver</button>
       </div>
     </ng-template>
     
