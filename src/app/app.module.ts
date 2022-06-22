@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
@@ -15,6 +15,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { NoticiasComponent } from './noticias/noticias.component';
 import { VerNoticiaComponent } from './ver-noticia/ver-noticia.component';
+import { MateriasComponent } from './materias/materias.component';
 
 
 
@@ -28,14 +29,16 @@ import { VerNoticiaComponent } from './ver-noticia/ver-noticia.component';
     NavbarComponent,
     HomeComponent,
     NoticiasComponent,
-    VerNoticiaComponent
+    VerNoticiaComponent,
+    MateriasComponent
   ],
   imports: [
     BrowserModule,
     NgbModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

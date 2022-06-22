@@ -4,6 +4,7 @@ import { Noticia_cantidad } from '../interfaces';
 import { Noticia } from '../interfaces';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 
@@ -15,27 +16,25 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 })
 export class NoticiasComponent implements OnInit {
 
-  
+  limit = 6;
+
   Noticias: any;
 
   // Linkeada al formulario de crear una nueva noticia
-  Noticia!: Noticia;
+  NoticiaNew: Noticia = {id: 0,titulo:"",descripcion:"",imagen:"",fechaCaducidad:""};
+  // Linkeada al formulario de editar una noticia
+  NoticiaEdit : Noticia = {id: 0,titulo:"",descripcion:"",imagen:"",fechaCaducidad:""};
 
   // Guardo la id de la noticia seleccionada (cuando se da a eliminar)
   id_seleccionada!: number;
 
-  
-  
-
-
   constructor( private noticiasServ: NoticiasService, private modalService: NgbModal) { }
 
   
-  
-
   ngOnInit(): void {
-    // Obtengo las primeras seis noticias
-    this.getAllNoticias(6,0);
+    // Obtengo las primeras noticias
+    this.getAllNoticias(this.limit,0);
+    
   }
 
 
@@ -49,6 +48,11 @@ export class NoticiasComponent implements OnInit {
   }
 
 
+  addNoticia(){
+    
+  }
+
+
   /* 
   --------------------------------------------------------------
   Modal NGBootstrap 
@@ -58,7 +62,7 @@ export class NoticiasComponent implements OnInit {
       closeResult = '';
       
       // Esta funcion se ejecuta al abrir el modal, en este caso al presionar el boton Eliminar de una noticia
-      open(content: any, id:number) {
+      open(content: any, noticia:Noticia) {
     
         this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
           this.closeResult = `Closed with: ${result}`;
@@ -66,7 +70,7 @@ export class NoticiasComponent implements OnInit {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
         
-        this.id_seleccionada = id;
+        this.id_seleccionada = noticia.id;
     
       }
     
@@ -79,6 +83,39 @@ export class NoticiasComponent implements OnInit {
           return `with: ${reason}`;
         }
       }
+
+      /* 
+  --------------------------------------------------------------
+  Modal NGBootstrap2 
+  --------------------------------------------------------------
+  */
+
+  closeResult2 = '';
+      
+  // Esta funcion se ejecuta al abrir el modal, en este caso al presionar el boton Editar de una noticia
+  open2(content2: any, noticia:Noticia) {
+
+    this.modalService.open(content2, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult2 = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult2 = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+    this.NoticiaEdit = noticia;
+   
+    
+
+
+  }
+
+  private getDismissReason2(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 
   /* 
   --------------------------------------------------------------
