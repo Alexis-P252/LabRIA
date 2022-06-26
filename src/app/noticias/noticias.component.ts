@@ -16,6 +16,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class NoticiasComponent implements OnInit {
 
+  token: string | null = null;
+  
   limit = 6;
 
   Noticias: any;
@@ -34,6 +36,8 @@ export class NoticiasComponent implements OnInit {
   ngOnInit(): void {
     // Obtengo las primeras noticias
     this.getAllNoticias(this.limit,0);
+
+    this.token = localStorage.getItem('token');
     
   }
 

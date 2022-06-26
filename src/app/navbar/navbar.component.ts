@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
+  token: string | null = null;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.token = localStorage.getItem('token');
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    window.location.reload();
+
   }
 
 }
