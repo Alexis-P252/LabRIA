@@ -31,8 +31,9 @@
             </div>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#" routerLink="/login">Iniciar Sesion</a></li>
-            <li><a class="dropdown-item" href="#" routerLink="/register">Registrarse</a></li>
+            <li><a class="dropdown-item" href="#" routerLink="/login" *ngIf="token == null">Iniciar Sesion</a></li>
+            <li><a class="dropdown-item" href="#" routerLink="/register" *ngIf="token == null">Registrarse</a></li>
+            <li><a class="dropdown-item" href="#" (click)="logout()" *ngIf="token != null">Cerrar Sesión</a></li>
           </ul>
         </li>
       </ul>

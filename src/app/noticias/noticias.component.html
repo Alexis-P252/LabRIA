@@ -5,7 +5,7 @@
 
 
       <!-- Seccion agregar nueva noticia -->
-      <div class="col mb-4">
+      <div class="col mb-4" *ngIf="token != null">
         
           <div class="d-flex justify-content-end mb-3">
             <button type="button" class="btn btn-light bold" (click)="collapse.toggle()"
@@ -59,8 +59,8 @@
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-success"
                     routerLink="/noticia/{{noticia.id}}">Ver</button>
-                  <button type="button" class="btn btn-sm btn-outline-primary" (click)="open2(content2, noticia)">Editar</button>
-                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="open(content, noticia)" >Eliminar</button>
+                  <button type="button" class="btn btn-sm btn-outline-primary" (click)="open2(content2, noticia)" *ngIf="token != null">Editar</button>
+                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="open(content, noticia)" *ngIf="token != null">Eliminar</button>
                 </div>
                 <small class="text-muted">{{noticia.fechaCaducidad}}</small>
               </div>
@@ -86,7 +86,7 @@
 
 
       <!--- Modal Eliminar -->
-      <ng-template #content let-modal>
+      <ng-template  #content let-modal>
         <div class="modal-header">
           <h4 class="modal-title" id="modal-basic-title">Eliminar noticia ID: {{this.id_seleccionada}}</h4>
    
@@ -130,10 +130,6 @@
           <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Editar</button>
         </div>
       </ng-template>
-      
-    
-      
-    
       
 
     </div>
