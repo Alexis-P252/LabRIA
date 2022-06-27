@@ -5,6 +5,8 @@ import { Noticia } from '../interfaces';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Observable, ReplaySubject } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 
@@ -22,6 +24,10 @@ export class NoticiasComponent implements OnInit {
 
   Noticias: any;
 
+  imgBase64 : string = "";
+
+  
+
   // Linkeada al formulario de crear una nueva noticia
   NoticiaNew: Noticia = {id: 0,titulo:"",descripcion:"",imagen:"",fechaCaducidad:""};
   // Linkeada al formulario de editar una noticia
@@ -30,7 +36,7 @@ export class NoticiasComponent implements OnInit {
   // Guardo la id de la noticia seleccionada (cuando se da a eliminar)
   id_seleccionada!: number;
 
-  constructor( private noticiasServ: NoticiasService, private modalService: NgbModal) { }
+  constructor( private noticiasServ: NoticiasService, private modalService: NgbModal, private sant:DomSanitizer) { }
 
   
   ngOnInit(): void {
@@ -55,6 +61,30 @@ export class NoticiasComponent implements OnInit {
   addNoticia(){
     
   }
+
+
+  handleUpload(event: any) {
+    
+    const file = event.target.files[0];
+
+    if(!file){
+      console.log("ERROR: No se selecciono ninguna imagen");
+    }
+    else{
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.imgBase64 = reader.result as string;
+        console.log( this.imgBase64);
+      }
+
+    }
+
+    
+  }
+
+
+  
 
 
   /* 
