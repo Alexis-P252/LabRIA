@@ -11,7 +11,6 @@ export class MateriasService {
 
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    //'Authorization': 'Bearer ' + localStorage.getItem('token')
   });
 
   constructor(private http: HttpClient) { }
