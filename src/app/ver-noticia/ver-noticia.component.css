@@ -1,0 +1,18 @@
+.imagen{
+    width:100% !important;
+    height:auto !important;
+   
+}
+
+img{
+    padding: 0;
+}
+
+.container{
+    width:60%;
+}
+
+.descripcion{
+    min-height:300px;
+}
+

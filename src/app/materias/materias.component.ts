@@ -10,6 +10,8 @@ import { MateriasService } from "../services/materias.service";
 })
 export class MateriasComponent implements OnInit {
 
+  
+
   MateriaNew : Materia = {id:0, nombre: "",  descripcion: "", creditosMinimos: 0 }
   MateriaEdit : Materia = {id:0, nombre: "",  descripcion: "", creditosMinimos: 0 }
 
@@ -31,4 +33,12 @@ export class MateriasComponent implements OnInit {
     })
   }
 
+
+
+
+
+
+
+  
 }
+

@@ -1,1 +1,50 @@
-<p>materias works!</p>
+
+<main>
+
+    <div class="album py-5 bg-light">
+      <div class="container">
+  
+
+        <!--- Materia -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 contenedor">
+  
+          <div class="col" *ngFor="let materia of Materias">
+            <div class="card shadow-sm">
+                <div class="d-flex">
+                  <div class="icono-container">
+                    <div class="icono">
+                        <img src="../../assets/materia.png">
+                    </div>
+                    <div class="titulo"> 
+                        <h5>
+                             {{materia.nombre}}
+                        </h5>
+                    </div>
+
+                  </div>
+        
+                    <div class="card-body">
+                      <h4 class="card-text m-0">{{materia.descripcion}}</h4>
+                      <small class="text-muted">Créditos mínimos: {{materia.creditosMinimos}}</small>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group mt-5">
+                          <button type="button" class="btn btn-sm btn-outline-success"
+                            routerLink="/noticia/{{materia.id}}">Ver</button>
+                          <button type="button" class="btn btn-sm btn-outline-primary">Editar</button>
+                          <button type="button" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                        </div>
+                      </div>
+                    </div>
+
+                </div>
+
+            </div>
+          </div>
+
+          
+  
+        </div>
+
+      </div>
+    </div>
+  </main>
