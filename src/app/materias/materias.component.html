@@ -3,6 +3,41 @@
 
     <div class="album py-5 bg-light">
       <div class="container">
+      
+        
+        <!-- Seccion agregar nueva noticia -->
+        <div class="col mb-4">
+          
+          <div class="d-flex justify-content-end mb-3">
+            <button type="button" class="btn btn-light bold" (click)="collapse.toggle()"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+              +Agregar nueva materia
+            </button>
+
+          </div>
+        
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+          <div class="card">
+            <div class="card-body">
+          
+                <label for="nombre" class="col-sm-2 control-label mt-1">Nombre</label>
+                <input type="text" class="form-control" id="nombre" [(ngModel)]="MateriaNew.nombre">
+
+                <label for="descripcion" class="col-sm-2 control-label mt-1">Descripcion</label>
+                <input type="text" class="form-control" id="descripcion" [(ngModel)]="MateriaNew.descripcion" >
+
+                <label for="creditosMinimos" class="col-sm-2 control-label mt-1">Créditos Mínimos</label>
+                <input type="text" class="form-control" id="creditosMinimos" [(ngModel)]="MateriaNew.creditosMinimos" >
+
+
+                <div class="d-flex justify-content-center align-items-center">
+                  <button class="btn btn-success mt-3" (click)="addMateria()" >Agregar</button>
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
   
 
         <!--- Materia -->
@@ -28,10 +63,9 @@
                       <small class="text-muted">Créditos mínimos: {{materia.creditosMinimos}}</small>
                       <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group mt-5">
-                          <button type="button" class="btn btn-sm btn-outline-success"
-                            routerLink="/noticia/{{materia.id}}">Ver</button>
-                          <button type="button" class="btn btn-sm btn-outline-primary">Editar</button>
-                          <button type="button" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                         
+                          <button type="button" class="btn btn-sm btn-outline-primary" (click)="open2(content2, materia)">Editar</button>
+                          <button type="button" class="btn btn-sm btn-outline-danger" (click)="open(content, materia)">Eliminar</button>
                         </div>
                       </div>
                     </div>
@@ -40,10 +74,50 @@
 
             </div>
           </div>
-
-          
-  
         </div>
+
+
+        <!--- Modal Eliminar -->
+      <ng-template  #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Eliminar materia ID: {{this.materiaSeleccionada}}</h4>
+   
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="dateOfBirth">Estas por eliminar esta maetria, ¿estás seguro?</label>
+             
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="modal.close('Save click')" (click)="deleteMateria()">Eliminar</button>
+        </div>
+      </ng-template>
+
+
+       <!--- Modal Editar -->
+       <ng-template #content2 let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Editar materia ID: {{this.MateriaEdit.id}}</h4>
+   
+        </div>
+        <div class="modal-body">
+          <label for="nombre" class="col-sm-2 control-label mt-1">Nombre</label>
+          <input type="text" class="form-control" id="nombre" [(ngModel)]="MateriaEdit.nombre">
+
+          <label for="descripcion" class="col-sm-2 control-label mt-1">Descripcion</label>
+          <input type="text" class="form-control" id="descripcion" [(ngModel)]="MateriaEdit.descripcion" >
+
+          <label for="creditosMinimos" class=" control-label mt-1">Créditos Mínimos</label>
+          <input type="text" class="form-control" id="creditosMinimos" [(ngModel)]="MateriaEdit.creditosMinimos" >
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="modal.close('Save click')" (click)="editMateria()">Editar</button>
+        </div>
+      </ng-template>
 
       </div>
     </div>

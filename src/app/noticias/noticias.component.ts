@@ -20,9 +20,9 @@ export class NoticiasComponent implements OnInit {
 
   token: string | null = null;
   
-  limit = 6;
+  limit = 9;
 
-  Noticias: any;
+  public Noticias: any;
 
   imgBase64 : string = "";
 
@@ -53,9 +53,12 @@ export class NoticiasComponent implements OnInit {
       
     this.noticiasServ.getAllNoticias(limit, offset).subscribe( data => {
       this.Noticias = data;
+      console.log(this.Noticias.size)
 
     })
   }
+  
+  
 
 
   addNoticia(){
@@ -158,7 +161,15 @@ export class NoticiasComponent implements OnInit {
   */
     public isCollapsed = true;
 
+/* 
+  --------------------------------------------------------------
+  Paginado NGBootstrap 
+  --------------------------------------------------------------
+  */
 
+
+  public pageSize: number = this.limit;
+  public page: number = 1;  
 
 
 }

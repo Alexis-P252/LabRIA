@@ -44,7 +44,7 @@
       <!--- Noticia -->
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-        <div class="col" *ngFor="let noticia of Noticias.list">
+        <div class="col" *ngFor="let noticia of Noticias.list ">
           <div class="card shadow-sm">
             <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
               role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -72,17 +72,12 @@
 
 
       <!--- Paginado -->
-      <div class="row mt-5" *ngIf="Noticias.size > limit" >
-        <div class="col-12">
-          <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-              <li class="page-item"><a class="page-link" href="">1</a></li>
-              <li class="page-item"><a class="page-link" href="">2</a></li>
-              <li class="page-item"><a class="page-link" href="">3</a></li> 
-            </ul>
-          </nav>
-        </div>
-      </div>
+      <ngb-pagination class=" mt-4 d-flex justify-content-center align-items-center"
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [collectionSize]="Noticias.size"></ngb-pagination>
+
+      
 
 
       <!--- Modal Eliminar -->
