@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { NoticiasComponent } from './noticias/noticias.component';
 import { VerNoticiaComponent } from './ver-noticia/ver-noticia.component';
 import { MateriasComponent } from './materias/materias.component';
+import { DocumentosComponent } from './documentos/documentos.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,9 @@ const routes: Routes = [
   },
   {
     path: 'materias', component: MateriasComponent
+  },
+  {
+    path: 'doc_de_interes', component: DocumentosComponent
   }
   
 ];

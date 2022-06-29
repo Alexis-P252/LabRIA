@@ -46,14 +46,9 @@
 
         <div class="col" *ngFor="let noticia of Noticias.list ">
           <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-              role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-              <title></title>
-              <rect width="100%" height="100%" fill="#55595c" /><text x="2%" y="10%" fill="#eceeef"
-                dy=".3em">{{noticia.titulo}}</text>
-            </svg>
-
+            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{noticia.imagen}}"/>
             <div class="card-body">
+              <h5 class="card-text">{{noticia.titulo}}</h5>
               <p class="card-text">{{noticia.descripcion}}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
