@@ -20,11 +20,8 @@ export class CarrouselComponent implements OnInit {
     this.noticiasServ.getNoticiasActivas().subscribe(
       data => {
         this.Activas = data;
-        console.log(this.Activas);
       }
-
     )
-  
   }
 
 }

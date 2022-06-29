@@ -67,10 +67,10 @@
 
 
       <!--- Paginado -->
-      <div class="row">
-        <select name="paginado">
-          <option *ngfor="let pagina of paginas">hola</option>
-
+      <div class=" d-flex justify-content-center align-items-center mt-3">
+        Número de Pagina: 
+        <select class="ms-2" name="paginado" (change)="cambiarPagina($event.target)">
+          <option name="pagina" *ngFor="let p of paginas, let i = index" value="{{i+1}}">{{i+1}}</option>
         </select> 
       </div>
       

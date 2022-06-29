@@ -20,11 +20,12 @@ export class NoticiasComponent implements OnInit {
 
   token: string | null = null;
   
-  limit = 9;
+  limit = 6;
   offset = 0;
   nro_paginas : number = 1;
 
   public paginas : Array<number> = [];
+  public pagina_selecionada: number = this.nro_paginas;
 
   public Noticias: any;
 
@@ -45,7 +46,6 @@ export class NoticiasComponent implements OnInit {
   
   ngOnInit(): void {
     // Obtengo las primeras noticias
-    console.log("PAGINAS:")
     this.getAllNoticias(this.limit, this.offset);
 
     this.token = localStorage.getItem('token');
@@ -66,9 +66,12 @@ export class NoticiasComponent implements OnInit {
         this.nro_paginas++;
       }
   
+      this.paginas = [];
       for(let i = 1; i <= this.nro_paginas; i++){
         this.paginas.push(i);
       }
+
+      console.log(this.paginas);
     })
   }
   
@@ -96,6 +99,14 @@ export class NoticiasComponent implements OnInit {
     error => {
       console.log("Hubo un error al eliminar la noticia");
     })
+  }
+
+  cambiarPagina(event: any){
+
+    
+    this.pagina_selecionada = event.value;
+    this.offset = (this.pagina_selecionada - 1) * this.limit;
+    this.getAllNoticias(this.limit, this.offset);
   }
 
 
