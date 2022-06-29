@@ -50,19 +50,13 @@
                     <div class="icono">
                         <img src="../../assets/materia.png">
                     </div>
-                    <div class="titulo"> 
-                        <h5>
-                             {{materia.nombre}}
-                        </h5>
-                    </div>
-
                   </div>
         
-                    <div class="card-body">
-                      <h4 class="card-text m-0">{{materia.descripcion}}</h4>
+                    <div class="card-body p-3 justify-content-between d-flex flex-column">
+                        <h5 class="card-text m-0 me-3">{{materia.nombre}}</h5>
                       <small class="text-muted">Créditos mínimos: {{materia.creditosMinimos}}</small>
                       <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group mt-5">
+                        <div class="btn-group">
                          
                           <button type="button" class="btn btn-sm btn-outline-primary" (click)="open2(content2, materia)">Editar</button>
                           <button type="button" class="btn btn-sm btn-outline-danger" (click)="open(content, materia)">Eliminar</button>

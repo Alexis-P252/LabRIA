@@ -20,7 +20,7 @@ export class NoticiasComponent implements OnInit {
 
   token: string | null = null;
   
-  limit = 9;
+  limit = 1000;
 
   public Noticias: any;
 
@@ -62,6 +62,10 @@ export class NoticiasComponent implements OnInit {
 
 
   addNoticia(){
+    this.noticiasServ.newNoticia(this.NoticiaNew).subscribe( data => {
+      this.ngOnInit();
+    }
+    )
     
   }
 
@@ -78,7 +82,7 @@ export class NoticiasComponent implements OnInit {
       reader.readAsDataURL(file);
       reader.onload = () => {
         this.imgBase64 = reader.result as string;
-        console.log( this.imgBase64);
+        this.NoticiaNew.imagen = this.imgBase64;
       }
 
     }
