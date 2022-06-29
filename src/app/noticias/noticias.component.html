@@ -67,11 +67,12 @@
 
 
       <!--- Paginado -->
-      <ngb-pagination class=" mt-4 d-flex justify-content-center align-items-center"
-        [(page)]="page"
-        [pageSize]="pageSize"
-        [collectionSize]="Noticias.size"></ngb-pagination>
+      <div class="row">
+        <select name="paginado">
+          <option *ngfor="let pagina of paginas">hola</option>
 
+        </select> 
+      </div>
       
 
 
@@ -90,7 +91,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Eliminar</button>
+          <button type="button" class="btn btn-danger" (click)="modal.close('Save click')" (click)="deleteNoticia()">Eliminar</button>
         </div>
       </ng-template>
 
@@ -109,7 +110,7 @@
           <input type="text" class="form-control" id="descripcion" [(ngModel)]="NoticiaEdit.descripcion" >
 
           <label for="imagen" class="col-sm-2 control-label mt-1">Imágen</label>
-          <input type="file" class="form-control" id="imagen" accept="image/*"  required [(ngModel)]="NoticiaEdit.imagen">
+          <input type="file" class="form-control" id="imagen" accept="image/*" (change)="handleUploadEdit($event)"  required [(ngModel)]="NoticiaEdit.imagen">
 
           <label for="fecha" class="col-sm-2 control-label mt-1">Fecha de caducidad</label>
           <input type="date" class="form-control" id="fecha" [(ngModel)]="NoticiaEdit.fechaCaducidad" >
@@ -117,7 +118,7 @@
       
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Editar</button>
+          <button type="button" class="btn btn-primary" (click)="modal.close('Save click')" (click)="editNoticia()">Editar</button>
         </div>
       </ng-template>
       

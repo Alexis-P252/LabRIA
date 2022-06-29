@@ -20,7 +20,11 @@ export class NoticiasComponent implements OnInit {
 
   token: string | null = null;
   
-  limit = 1000;
+  limit = 9;
+  offset = 0;
+  nro_paginas : number = 1;
+
+  public paginas : Array<number> = [];
 
   public Noticias: any;
 
@@ -41,10 +45,11 @@ export class NoticiasComponent implements OnInit {
   
   ngOnInit(): void {
     // Obtengo las primeras noticias
-    this.getAllNoticias(this.limit,0);
+    console.log("PAGINAS:")
+    this.getAllNoticias(this.limit, this.offset);
 
     this.token = localStorage.getItem('token');
-    
+
   }
 
 
@@ -53,22 +58,52 @@ export class NoticiasComponent implements OnInit {
       
     this.noticiasServ.getAllNoticias(limit, offset).subscribe( data => {
       this.Noticias = data;
-      console.log(this.Noticias.size)
+      
+      // Obtengo la cantidad de paginas
+      this.nro_paginas = this.Noticias.size / this.limit;
 
+      if(this.Noticias.size % this.limit != 0){
+        this.nro_paginas++;
+      }
+  
+      for(let i = 1; i <= this.nro_paginas; i++){
+        this.paginas.push(i);
+      }
     })
   }
   
   
 
-
   addNoticia(){
     this.noticiasServ.newNoticia(this.NoticiaNew).subscribe( data => {
       this.ngOnInit();
-    }
-    )
-    
+    })
   }
 
+  editNoticia(){
+    this.noticiasServ.updateNoticia(this.NoticiaEdit).subscribe( data =>{
+      this.ngOnInit();
+    },
+    error => {
+      console.log("Hubo un error al editar la noticia");
+    })
+  }
+
+  deleteNoticia(){
+    this.noticiasServ.deleteNoticia(this.id_seleccionada).subscribe( data => {
+      this.ngOnInit();
+    },
+    error => {
+      console.log("Hubo un error al eliminar la noticia");
+    })
+  }
+
+
+   /* 
+  --------------------------------------------------------------
+   Convierten las imagenes a base64
+  --------------------------------------------------------------
+  */
 
   handleUpload(event: any) {
     
@@ -84,11 +119,26 @@ export class NoticiasComponent implements OnInit {
         this.imgBase64 = reader.result as string;
         this.NoticiaNew.imagen = this.imgBase64;
       }
-
     }
-
-    
   }
+
+  handleUploadEdit(event: any) {
+    
+    const file = event.target.files[0];
+
+    if(!file){
+      console.log("ERROR: No se selecciono ninguna imagen");
+    }
+    else{
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.imgBase64 = reader.result as string;
+        this.NoticiaEdit.imagen = this.imgBase64;
+      }
+    }
+  }
+
 
 
   
@@ -141,11 +191,8 @@ export class NoticiasComponent implements OnInit {
     }, (reason) => {
       this.closeResult2 = `Dismissed ${this.getDismissReason(reason)}`;
     });
-    this.NoticiaEdit = noticia;
-   
+    this.NoticiaEdit =  JSON.parse(JSON.stringify(noticia));
     
-
-
   }
 
   private getDismissReason2(reason: any): string {
@@ -172,10 +219,5 @@ export class NoticiasComponent implements OnInit {
   */
 
 
-  public pageSize: number = this.limit;
-  public page: number = 1;  
-
-
 }
-
 
