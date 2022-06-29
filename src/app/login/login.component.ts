@@ -18,17 +18,22 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  login(){
+  login() {
       this.AuthServ.login(this.username, this.password).subscribe(
-        data => {
+        async data => {
           this.Estado = data
           localStorage.setItem('token', this.Estado.token);
-          this.router.navigate(['/']);
+
+          await this.router.navigate(['/']);
+          window.location.reload();
         },
         error => {
-          console.log("Hubo un error");
+          document.getElementById("alerta-login")!.style.display = "block";
 
         })
   }
+
+  
+  
 
 }

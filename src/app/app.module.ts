@@ -18,6 +18,7 @@ import { VerNoticiaComponent } from './ver-noticia/ver-noticia.component';
 import { MateriasComponent } from './materias/materias.component';
 import { AuthInterceptorService } from './services/auth-interceptor-service.service';
 import { DocumentosComponent } from './documentos/documentos.component';
+import { UnidadesCurricularesComponent } from './unidades-curriculares/unidades-curriculares.component';
 
 
 
@@ -33,7 +34,8 @@ import { DocumentosComponent } from './documentos/documentos.component';
     NoticiasComponent,
     VerNoticiaComponent,
     MateriasComponent,
-    DocumentosComponent
+    DocumentosComponent,
+    UnidadesCurricularesComponent
   ],
   imports: [
     BrowserModule,
