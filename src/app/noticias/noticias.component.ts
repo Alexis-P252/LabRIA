@@ -71,7 +71,6 @@ export class NoticiasComponent implements OnInit {
         this.paginas.push(i);
       }
 
-      console.log(this.paginas);
     })
   }
   

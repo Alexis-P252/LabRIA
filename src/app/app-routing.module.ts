@@ -7,6 +7,7 @@ import { NoticiasComponent } from './noticias/noticias.component';
 import { VerNoticiaComponent } from './ver-noticia/ver-noticia.component';
 import { MateriasComponent } from './materias/materias.component';
 import { DocumentosComponent } from './documentos/documentos.component';
+import {UnidadesCurricularesComponent} from './unidades-curriculares/unidades-curriculares.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,9 @@ const routes: Routes = [
   },
   {
     path: 'doc_de_interes', component: DocumentosComponent
+  },
+  {
+    path: 'unidades_curriculares', component: UnidadesCurricularesComponent
   }
   
 ];
