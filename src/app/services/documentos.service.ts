@@ -11,7 +11,6 @@ export class DocumentosService {
 
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    //'Authorization': 'Bearer ' + localStorage.getItem('token')
   });
 
   constructor(private http: HttpClient) { }
@@ -20,8 +19,13 @@ export class DocumentosService {
     return this.http.get(environment.api_url + "Documentos/Paged/" + offset + "/" + limit);
   }
 
-  getDocumentosActivos(){
-    return this.http.get(environment.api_url + "Documentos/Activos");
+  getDocumentosActivos(categoria: string){
+    return this.http.get(environment.api_url + "Documentos/Activos/",
+    {
+      params: { tipo: categoria },
+      headers: this.headers
+    });
+    
   }
 
   newDocumento(documento: Documento){

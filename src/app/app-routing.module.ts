@@ -8,6 +8,7 @@ import { VerNoticiaComponent } from './ver-noticia/ver-noticia.component';
 import { MateriasComponent } from './materias/materias.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import {UnidadesCurricularesComponent} from './unidades-curriculares/unidades-curriculares.component';
+import { VerdocumentosComponent } from './verdocumentos/verdocumentos.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,9 @@ const routes: Routes = [
   },
   {
     path: 'unidades_curriculares', component: UnidadesCurricularesComponent
+  }, 
+  {
+    path: 'documentos/:categoria', component: VerdocumentosComponent
   }
   
 ];
