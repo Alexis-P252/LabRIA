@@ -1,8 +1,61 @@
 <div class="album py-5 bg-light">
   <div class="container">
+
+     <!-- Alertas -->
+      <div class="alert alert-success text-center" id="alertaSuccess" role="alert" >
+        <strong>{{alertSuccess}}</strong> 
+      </div>
+      <div class="alert alert-danger text-center" role="alert" id="alertaError" >
+        <strong>{{alertError}}</strong> 
+      </div>
+
+     <!-- Seccion agregar nueva noticia -->
+     <div class="col mb-4" *ngIf="token != null">
+        
+      <div class="d-flex justify-content-end mb-3">
+        <button type="button" class="btn btn-light bold" (click)="collapse.toggle()"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+          +Agregar nuevo documento
+        </button>
+
+      </div>
+    
+    <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+      <div class="card">
+        <div class="card-body">
+       
+            <label for="titulo" class="col-sm-2 control-label mt-1">Título</label>
+            <input type="text" class="form-control" id="titulo" [(ngModel)]="DocumentoNew.titulo">
+
+            <label for="categoria" class="col-sm-2 control-label mt-1">Categoria</label>
+
+            <select class="form-select" name="categoria" [(ngModel)]="DocumentoNew.tipo">
+              <option value="DATOS_DE_INTERES">Datos de interes</option>
+              <option value="OPORTUNIDADES_LABORALES">Oportunidades laborales</option>
+              <option value="INFORMACION_CARRERA">Información de la carrera</option>
+            </select>
+            <p><b>Por defecto, la categoria es Datos de Interes</b></p>
+    
+
+            <label for="imagen" class="col-sm-2 control-label mt-1">Dócumento PDF</label>
+            <input type="file" class="form-control" id="imagen" accept="application/pdf" required (change)="handleUpload($event)" >
+            <div class="err-empty-pdf" id="error-empty-pdf">Debes subir un documento PDF obligatoriamente</div>
+
+         
+            <div class="d-flex justify-content-center align-items-center">
+              <button class="btn btn-success mt-3" id="btnAgregarDocumento" disabled (click)="addDocumento()" >Agregar</button>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
     <!--- Documento -->
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 contenedor">
-      <div class="col">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 contenedor" >
+      <div class="col" *ngFor="let documento of Documentos.list ">
         <div class="card shadow-sm">
           <div class="d-flex">
             <div class="icono-container">
@@ -14,22 +67,22 @@
             <div
               class="card-body p-3 justify-content-between d-flex flex-column"
             >
-              <h5 class="card-text m-0 me-3">Titulo Documento</h5>
+              <h5 class="card-text m-0 me-3">{{documento.titulo}}</h5>
               <div class="d-flex">
                 <a class="text-muted pdf me-2"> ->Doc PDF</a>
                 <div class="d-flex">
-                  <span class="badge bg-primary">Activo</span>
+                  <span *ngIf="documento.activo == true" class="badge bg-primary">Activo</span>
                 </div>
               </div>
-              <div class="">Categoria: Ejemplo de categoria</div>
+              <div class="" *ngIf="documento.tipo == 'DATOS_DE_INTERES'">Datos de Interes </div>
+              <div class="" *ngIf="documento.tipo == 'OPORTUNIDADES_LABORALES'">Oportunidades laborales</div>
+              <div class="" *ngIf="documento.tipo == 'INFORMACION_CARRERA'">Informacion de la carrera</div>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-primary">
+                  <button type="button" class="btn btn-sm btn-outline-primary"  (click)="open(content, documento)" *ngIf="token != null">
                     Editar
                   </button>
-                  <button type="button" class="btn btn-sm btn-outline-danger">
-                    Eliminar
-                  </button>
+                 
                 </div>
               </div>
             </div>
@@ -37,5 +90,58 @@
         </div>
       </div>
     </div>
+
+     <!--- Paginado -->
+     <div class=" d-flex justify-content-center align-items-center mt-3" *ngIf="paginas.length > 1">
+      Número de Pagina: 
+      <select class="ms-2" name="paginado" (change)="cambiarPagina($event.target)">
+        <option name="pagina" *ngFor="let p of paginas, let i = index" value="{{i+1}}">{{i+1}}</option>
+      </select> 
+    </div>
+
+
+     <!--- Modal Editar -->
+     <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Editar documento ID: {{this.DocumentoEdit.id}}</h4>
+ 
+      </div>
+      <div class="modal-body">
+        <label for="titulo" class="col-sm-2 control-label mt-1">Título</label>
+        <input type="text" class="form-control" id="titulo" [(ngModel)]="DocumentoEdit.titulo">
+
+        <label for="categoria" class="col-sm-2 control-label mt-1">Categoria</label>
+        <select class="form-select" name="categoria" [(ngModel)]="DocumentoEdit.tipo">
+          <option value="DATOS_DE_INTERES">Datos de interes</option>
+          <option value="OPORTUNIDADES_LABORALES">Oportunidades laborales</option>
+          <option value="INFORMACION_CARRERA">Informacion de la carrera</option>
+        </select>
+        <p><b>Por defecto, la categoria es Datos de Interes</b></p>
+
+        <label for="imagen" class="col-sm-2 control-label mt-1">Documento PDF</label>
+        <input type="file" class="form-control" id="imagen" accept="application/pdf" (change)="handleUploadEdit($event)"  required [(ngModel)]="DocumentoEdit.documentoPDF">
+        <div class="aviso-imagen" id="aviso-pdf">No subas un documento si no quieres cambiarlo ☝</div>
+
+        <label for="activo" class="col-sm-2 control-label mt-1">Activo</label> <br>
+
+        <div class="btn-group mt-2" role="group" ngbRadioGroup name="radioBasic" [(ngModel)]="model">
+          <label ngbButtonLabel class="btn-primary">
+            <input ngbButton type="radio" class="btn-check" value="Si"> Si
+          </label>
+          <label ngbButtonLabel class="btn-primary">
+            <input ngbButton type="radio" class="btn-check" value="No"> No
+          </label>
+        </div>
+     
+  
+
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="modal.close('Save click')" (click)="editDocumento()">Editar</button>
+      </div>
+    </ng-template>
+
+
   </div>
 </div>

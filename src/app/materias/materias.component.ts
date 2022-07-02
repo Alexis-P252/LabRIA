@@ -11,7 +11,8 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 })
 export class MateriasComponent implements OnInit {
 
-  
+  alertSuccess: string = "";
+  alertError: string = "";
 
   MateriaNew : Materia = {id:0, nombre: "",  descripcion: "", creditosMinimos: 0 }
   MateriaEdit : Materia = {id:0, nombre: "",  descripcion: "", creditosMinimos: 0 }
@@ -36,35 +37,101 @@ export class MateriasComponent implements OnInit {
   }
 
   addMateria(){
-    this.materiasServ.newMateria(this.MateriaNew).subscribe( 
-      data => {
-      console.log("Materia agregada correctamente");
-      this.ngOnInit();
+
+    if(this.MateriaNew.nombre == "" || this.MateriaNew.descripcion == "" || this.MateriaNew.creditosMinimos == 0){
+      this.alertError = "Todos los campos son obligatorios, los creditos minimos deben ser mayor a 0";
+      document.getElementById("alertaError")!.style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      }, 3000);
     }
-    , error => {
-      console.log(error);
-    })
+    else{
+
+      this.materiasServ.newMateria(this.MateriaNew).subscribe( 
+        data => {
+        this.ngOnInit();
+        this.alertSuccess = "Materia agregada correctamente";
+        document.getElementById("alertaSuccess")!.style.display = "block";
+
+        setTimeout(() => {
+          document.getElementById("alertaSuccess")!.style.display = "none";
+        }, 3000);
+      }
+      , error => {
+          this.alertError = "Hubo un error al agregar la materia";
+          document.getElementById("alertaError")!.style.display = "block";
+  
+          setTimeout(() => {
+            document.getElementById("alertaError")!.style.display = "none";
+          }, 3000);
+        
+      })
+
+    }
+
+
+   
   }
 
   editMateria(){
-    this.materiasServ.updateMateria(this.MateriaEdit).subscribe( 
-      data => {
-      console.log("Materia editada correctamente");
-      this.ngOnInit();
+
+    if(this.MateriaEdit.nombre == "" || this.MateriaEdit.descripcion == "" || this.MateriaEdit.creditosMinimos == 0){
+      this.alertError = "Todos los campos son obligatorios, los creditos minimos deben ser mayor a 0";
+      document.getElementById("alertaError")!.style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      }, 3000);
     }
-    , error => {
-      console.log(error);
-    })
+    else{
+
+      this.materiasServ.updateMateria(this.MateriaEdit).subscribe( 
+        data => {
+        this.ngOnInit();
+        this.alertSuccess = "Materia editada correctamente";
+        document.getElementById("alertaSuccess")!.style.display = "block";
+
+        setTimeout(() => {
+          document.getElementById("alertaSuccess")!.style.display = "none";
+        }, 3000);
+
+      }
+      , error => {
+
+        this.alertError = "Hubo un error al editar la materia";
+        document.getElementById("alertaError")!.style.display = "block";
+
+        setTimeout(() => {
+          document.getElementById("alertaError")!.style.display = "none";
+        }, 3000);
+  
+      })
+
+    }
+
+    
   }
 
   deleteMateria(){
     this.materiasServ.deleteMateria(this.materiaSeleccionada).subscribe( 
       data => {
-      console.log("Materia eliminada correctamente");
       this.ngOnInit();
+      this.alertSuccess = "Materia eliminada correctamente";
+        document.getElementById("alertaSuccess")!.style.display = "block";
+
+        setTimeout(() => {
+          document.getElementById("alertaSuccess")!.style.display = "none";
+        }, 3000);
+
     }
     , error => {
-      console.log(error);
+      this.alertError = "Hubo un error al eliminar la materia";
+        document.getElementById("alertaError")!.style.display = "block";
+
+        setTimeout(() => {
+          document.getElementById("alertaError")!.style.display = "none";
+        }, 3000);
     })
   }  
 

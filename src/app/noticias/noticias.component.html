@@ -3,6 +3,14 @@
   <div class="album py-5 bg-light">
     <div class="container">
 
+      <!-- Alertas -->
+      <div class="alert alert-success text-center" id="alertaSuccess" role="alert" >
+        <strong>{{alertSuccess}}</strong> 
+      </div>
+      <div class="alert alert-danger text-center" role="alert" id="alertaError" >
+        <strong>{{alertError}}</strong> 
+      </div>
+
 
       <!-- Seccion agregar nueva noticia -->
       <div class="col mb-4" *ngIf="token != null">
@@ -26,13 +34,14 @@
                 <input type="text" class="form-control" id="descripcion" [(ngModel)]="NoticiaNew.descripcion" >
   
                 <label for="imagen" class="col-sm-2 control-label mt-1">Imágen</label>
-                <input type="file" class="form-control" id="imagen" accept="image/*" required (change)="handleUpload($event)" >
+                <input type="file" class="form-control" id="imagen" accept="image/*" required (change)="handleUpload($event)">
+                <div class="err-empty-image" id="error-empty-image">Debes subir una imagen obligatoriamente</div>
   
                 <label for="fecha" class="col-sm-2 control-label mt-1">Fecha de caducidad</label>
-                <input type="date" class="form-control" id="fecha" [(ngModel)]="NoticiaNew.fechaCaducidad" >
+                <input type="date" class="form-control" id="fecha" min="{{fecha_hoy | date:'yyyy-MM-dd' }}" [(ngModel)]="NoticiaNew.fechaCaducidad" >
   
                 <div class="d-flex justify-content-center align-items-center">
-                  <button class="btn btn-success mt-3" (click)="addNoticia()" >Agregar</button>
+                  <button id="btnAgregarNoticia" class="btn btn-success mt-3" disabled (click)="addNoticia()" >Agregar</button>
                 </div>
 
             </div>
@@ -49,7 +58,7 @@
             <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{noticia.imagen}}"/>
             <div class="card-body">
               <h5 class="card-text">{{noticia.titulo}}</h5>
-              <p class="card-text">{{noticia.descripcion}}</p>
+              <p class="card-text">{{noticia.descripcion.substring(0,150) + "..."}}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-success"
@@ -57,7 +66,7 @@
                   <button type="button" class="btn btn-sm btn-outline-primary" (click)="open2(content2, noticia)" *ngIf="token != null">Editar</button>
                   <button type="button" class="btn btn-sm btn-outline-danger" (click)="open(content, noticia)" *ngIf="token != null">Eliminar</button>
                 </div>
-                <small class="text-muted">{{noticia.fechaCaducidad}}</small>
+                <small class="text-muted">Caducidad: {{noticia.fechaCaducidad.substring(0,10)}}</small>
               </div>
             </div>
           </div>
@@ -67,7 +76,7 @@
 
 
       <!--- Paginado -->
-      <div class=" d-flex justify-content-center align-items-center mt-3">
+      <div class=" d-flex justify-content-center align-items-center mt-3" *ngIf="paginas.length > 1">
         Número de Pagina: 
         <select class="ms-2" name="paginado" (change)="cambiarPagina($event.target)">
           <option name="pagina" *ngFor="let p of paginas, let i = index" value="{{i+1}}">{{i+1}}</option>
@@ -111,9 +120,10 @@
 
           <label for="imagen" class="col-sm-2 control-label mt-1">Imágen</label>
           <input type="file" class="form-control" id="imagen" accept="image/*" (change)="handleUploadEdit($event)"  required [(ngModel)]="NoticiaEdit.imagen">
+          <div class="aviso-imagen" id="aviso-imagen">No subas una imagen si no quieres cambiarla ☝</div>
 
-          <label for="fecha" class="col-sm-2 control-label mt-1">Fecha de caducidad</label>
-          <input type="date" class="form-control" id="fecha" [(ngModel)]="NoticiaEdit.fechaCaducidad" >
+          <label for="fecha" class="col control-label mt-1">Fecha de caducidad</label>
+          <input type="date" class="form-control" id="fecha" min="{{fecha_hoy | date:'yyyy-MM-dd' }}" value="{{NoticiaEdit.fechaCaducidad.substring(0,10) | date:'yyyy-MM-dd'}}" [(ngModel)]="NoticiaEdit.fechaCaducidad" >
 
       
         </div>
