@@ -3,6 +3,14 @@
 
     <div class="album py-5 bg-light">
       <div class="container">
+
+        <!-- Alertas -->
+        <div class="alert alert-success text-center" id="alertaSuccess" role="alert" >
+          <strong>{{alertSuccess}}</strong> 
+        </div>
+        <div class="alert alert-danger text-center" role="alert" id="alertaError" >
+          <strong>{{alertError}}</strong> 
+        </div>
       
         
         <!-- Seccion agregar nueva noticia -->
@@ -27,7 +35,7 @@
                 <input type="text" class="form-control" id="descripcion" [(ngModel)]="MateriaNew.descripcion" >
 
                 <label for="creditosMinimos" class="col-sm-2 control-label mt-1">Créditos Mínimos</label>
-                <input type="text" class="form-control" id="creditosMinimos" [(ngModel)]="MateriaNew.creditosMinimos" >
+                <input type="number" class="form-control" id="creditosMinimos" min="1" value="1" [(ngModel)]="MateriaNew.creditosMinimos" >
 
 
                 <div class="d-flex justify-content-center align-items-center">

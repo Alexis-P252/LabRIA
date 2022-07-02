@@ -18,6 +18,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class NoticiasComponent implements OnInit {
 
+  alertSuccess : string = "";
+  alertError : string = "";
+
   token: string | null = null;
   
   limit = 6;
@@ -31,6 +34,9 @@ export class NoticiasComponent implements OnInit {
 
   imgBase64 : string = "";
 
+  // Fecha de hoy
+  fecha_hoy : Date = new Date();
+  
   
 
   // Linkeada al formulario de crear una nueva noticia
@@ -58,6 +64,7 @@ export class NoticiasComponent implements OnInit {
       
     this.noticiasServ.getAllNoticias(limit, offset).subscribe( data => {
       this.Noticias = data;
+      console.log(this.Noticias);
       
       // Obtengo la cantidad de paginas
       this.nro_paginas = this.Noticias.size / this.limit;
@@ -77,26 +84,95 @@ export class NoticiasComponent implements OnInit {
   
 
   addNoticia(){
-    this.noticiasServ.newNoticia(this.NoticiaNew).subscribe( data => {
-      this.ngOnInit();
-    })
+    
+    if(this.NoticiaNew.titulo == "" || this.NoticiaNew.descripcion == "" || this.NoticiaNew.fechaCaducidad == ""){
+
+      // Muestro feedback al usuario por un tiempo
+      this.alertError = "Los campos titulo, descripcion y fecha de caducidad son obligatorios";
+      document.getElementById("alertaError")!.style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      }, 3000);
+
+    }
+    else{
+      this.noticiasServ.newNoticia(this.NoticiaNew).subscribe( 
+        data => {
+          this.ngOnInit();
+          this.alertSuccess = "Noticia creada correctamente";
+          document.getElementById("alertaSuccess")!.style.display = "block";
+          setTimeout(() => {
+            document.getElementById("alertaSuccess")!.style.display = "none";
+          }, 3000);
+
+        }),
+        (error: any) => {
+          this.alertError = "Error al crear la noticia";
+          document.getElementById("alertaError")!.style.display = "block";
+
+          setTimeout(() => {
+            document.getElementById("alertaError")!.style.display = "none";
+          }, 3000);
+        }
+    }
   }
 
   editNoticia(){
-    this.noticiasServ.updateNoticia(this.NoticiaEdit).subscribe( data =>{
-      this.ngOnInit();
-    },
-    error => {
-      console.log("Hubo un error al editar la noticia");
-    })
+
+    if(this.NoticiaEdit.titulo == "" || this.NoticiaEdit.descripcion == "" || this.NoticiaEdit.fechaCaducidad == ""){
+
+      // Muestro feedback al usuario por un tiempo
+      this.alertError = "Los campos titulo, descripcion y fecha de caducidad son obligatorios";
+      document.getElementById("alertaError")!.style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      }, 3000);
+
+    }
+    else{
+
+      this.noticiasServ.updateNoticia(this.NoticiaEdit).subscribe( data =>{
+        this.ngOnInit();
+        this.alertSuccess = "Noticia editada correctamente";
+        document.getElementById("alertaSuccess")!.style.display = "block";
+        setTimeout(() => {
+          document.getElementById("alertaSuccess")!.style.display = "none";
+        }, 3000);
+
+      },
+      error => {
+        this.alertError = "Error al editar la noticia";
+          document.getElementById("alertaError")!.style.display = "block";
+
+          setTimeout(() => {
+            document.getElementById("alertaError")!.style.display = "none";
+          }, 3000);
+      })
+
+    }
+
+   
   }
 
   deleteNoticia(){
     this.noticiasServ.deleteNoticia(this.id_seleccionada).subscribe( data => {
       this.ngOnInit();
+      this.alertSuccess = "Noticia eliminada correctamente";
+        document.getElementById("alertaSuccess")!.style.display = "block";
+        setTimeout(() => {
+          document.getElementById("alertaSuccess")!.style.display = "none";
+        }, 3000);
+
     },
     error => {
-      console.log("Hubo un error al eliminar la noticia");
+      this.alertError = "Error al eliminar la noticia";
+      document.getElementById("alertaError")!.style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      }, 3000);
     })
   }
 
@@ -120,9 +196,17 @@ export class NoticiasComponent implements OnInit {
     const file = event.target.files[0];
 
     if(!file){
-      console.log("ERROR: No se selecciono ninguna imagen");
+
+      document.getElementById("error-empty-image")!.style.display = "block";
+      const btn = document.getElementById("btnAgregarNoticia") as HTMLButtonElement | null;
+      btn!.disabled = true;
     }
     else{
+
+      document.getElementById("error-empty-image")!.style.display = "none";
+      const btn = document.getElementById("btnAgregarNoticia") as HTMLButtonElement | null;
+      btn!.disabled = false;
+
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -185,7 +269,7 @@ export class NoticiasComponent implements OnInit {
         }
       }
 
-      /* 
+  /* 
   --------------------------------------------------------------
   Modal NGBootstrap2 
   --------------------------------------------------------------
@@ -202,7 +286,7 @@ export class NoticiasComponent implements OnInit {
       this.closeResult2 = `Dismissed ${this.getDismissReason(reason)}`;
     });
     this.NoticiaEdit =  JSON.parse(JSON.stringify(noticia));
-    
+    this.NoticiaEdit.fechaCaducidad = this.NoticiaEdit.fechaCaducidad.substring(0,10);
   }
 
   private getDismissReason2(reason: any): string {
@@ -222,11 +306,6 @@ export class NoticiasComponent implements OnInit {
   */
     public isCollapsed = true;
 
-/* 
-  --------------------------------------------------------------
-  Paginado NGBootstrap 
-  --------------------------------------------------------------
-  */
 
 
 }

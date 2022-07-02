@@ -30,3 +30,21 @@ img{
     cursor: pointer;
     text-decoration: none;
 }
+
+.err-empty-pdf{
+    color: red;
+    font-size: 15px;
+    font-weight: 600;
+    display: block;
+}
+
+.aviso-pdf{
+    color: blue;
+    font-size: 15px;
+    font-weight: 600;
+    display: block;
+}
+
+.alert{
+    display: none;
+}
