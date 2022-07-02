@@ -9,7 +9,7 @@
         <strong>{{alertError}}</strong> 
       </div>
 
-     <!-- Seccion agregar nueva noticia -->
+     <!-- Seccion agregar nuevo documento -->
      <div class="col mb-4" *ngIf="token != null">
         
       <div class="d-flex justify-content-end mb-3">
@@ -69,7 +69,7 @@
             >
               <h5 class="card-text m-0 me-3">{{documento.titulo}}</h5>
               <div class="d-flex">
-                <a class="text-muted pdf me-2"> ->Doc PDF</a>
+                <a class="text-muted pdf me-2" (click)="onClcikDownloadPDF(documento.documentoPDF)"> ->Doc PDF</a>  
                 <div class="d-flex">
                   <span *ngIf="documento.activo == true" class="badge bg-primary">Activo</span>
                 </div>
@@ -118,7 +118,7 @@
         </select>
         <p><b>Por defecto, la categoria es Datos de Interes</b></p>
 
-        <label for="imagen" class="col-sm-2 control-label mt-1">Documento PDF</label>
+        <label for="imagen" class="col control-label mt-1">Documento PDF</label>
         <input type="file" class="form-control" id="imagen" accept="application/pdf" (change)="handleUploadEdit($event)"  required [(ngModel)]="DocumentoEdit.documentoPDF">
         <div class="aviso-imagen" id="aviso-pdf">No subas un documento si no quieres cambiarlo ☝</div>
 

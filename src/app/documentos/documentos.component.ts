@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentosService } from '../services/documentos.service';
 import { Documento } from "../interfaces"
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
@@ -32,7 +33,7 @@ export class DocumentosComponent implements OnInit {
   public pagina_selecionada: number = this.nro_paginas;
 
   constructor(
-    private documentosServ: DocumentosService, private modalService: NgbModal
+    private documentosServ: DocumentosService, private modalService: NgbModal, private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -182,6 +183,23 @@ export class DocumentosComponent implements OnInit {
     }
 
   }
+
+  onClcikDownloadPDF(pdf: string){
+    this.downloadPdf(pdf, "Documento");
+  }
+
+  downloadPdf(base64String: string, nombreDocumento: string){
+    const link = document.createElement("a");
+    link.href = base64String;
+    link.download = nombreDocumento+".pdf";
+    link.click();
+  }
+
+
+  sanitizePDF(pdf: string){
+    return this.sanitizer.bypassSecurityTrustResourceUrl(pdf);
+  }
+      
 
 
 

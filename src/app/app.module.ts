@@ -19,6 +19,9 @@ import { MateriasComponent } from './materias/materias.component';
 import { AuthInterceptorService } from './services/auth-interceptor-service.service';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { UnidadesCurricularesComponent } from './unidades-curriculares/unidades-curriculares.component';
+import { VerdocumentosComponent } from './verdocumentos/verdocumentos.component';
+
+
 
 
 
@@ -35,7 +38,9 @@ import { UnidadesCurricularesComponent } from './unidades-curriculares/unidades-
     VerNoticiaComponent,
     MateriasComponent,
     DocumentosComponent,
-    UnidadesCurricularesComponent
+    UnidadesCurricularesComponent,
+    VerdocumentosComponent,
+    
   ],
   imports: [
     BrowserModule,
