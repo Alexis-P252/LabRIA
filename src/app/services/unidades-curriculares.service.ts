@@ -20,6 +20,10 @@ export class UnidaesCurricularesService {
     return this.http.get(environment.api_url + "UnidadesCurriculares/");
   }
 
+  getUnidadCurricular(id: number){
+    return this.http.get(environment.api_url + "UnidadesCurriculares/" + id);
+  }
+
   newUnidadCurricular(unidadCurricular: UnidadCurricular){
     return this.http.post(environment.api_url + "UnidadesCurriculares/",
     {

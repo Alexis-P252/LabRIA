@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {UnidaesCurricularesService} from '../services/unidades-curriculares.service';
+import { MateriasService } from '../services/materias.service'; 
+import {Materia, UnidadCurricular} from '../interfaces';
+
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-unidades-curriculares',
@@ -7,9 +12,203 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UnidadesCurricularesComponent implements OnInit {
 
-  constructor() { }
+  alertSuccess: string = "";
+  alertError: string = "";
+  imgBase64: string = "";
+  id_seleccionada: number = 0;
+
+  idMateria: number = 0;
+  materiaInterface: Materia = {id:0, nombre: "",  descripcion: "", creditosMinimos: 0};
+
+  unidadNew: UnidadCurricular = {id:0, nombre:"", descripcion:"",creditos:0 , documento:"", semestre: 0, materia: this.materiaInterface, previas: []};
+  unidadEdit: UnidadCurricular = {id:0, nombre:"", descripcion:"",creditos:0 , documento:"", semestre: 0, materia: this.materiaInterface, previas: []};
+
+  unidades: any;
+  materias: any;
+  semestre1: UnidadCurricular[] = []; semestre2: UnidadCurricular[] = []; semestre3: UnidadCurricular[] = []; semestre4: UnidadCurricular[] = []; semestre5: UnidadCurricular[] = []; semestre6: UnidadCurricular[] = [];
+
+  constructor(private unidadesServ: UnidaesCurricularesService, private materiasServ: MateriasService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    this.unidadesServ.getUnidadesCurriculares().subscribe(
+      (unidades) => {
+        this.unidades = unidades;
+
+        for (let i = 0; i < this.unidades.length; i++) {
+          if (this.unidades[i].semestre == 1) {
+            this.semestre1.push(this.unidades[i]);
+          } else if (this.unidades[i].semestre == 2) {
+            this.semestre2.push(this.unidades[i]);
+          } else if (this.unidades[i].semestre == 3) {
+            this.semestre3.push(this.unidades[i]);
+          } else if (this.unidades[i].semestre == 4) {
+            this.semestre4.push(this.unidades[i]);
+          } else if (this.unidades[i].semestre == 5) {
+            this.semestre5.push(this.unidades[i]);
+          } else if (this.unidades[i].semestre == 6) {
+            this.semestre6.push(this.unidades[i]);
+          }
+        }
+
+        this.obtenerMaterias();
+    })
+  }
+
+  obtenerMaterias(){
+    this.materiasServ.getMaterias().subscribe( data => {
+      this.materias = data;
+    })
+  }
+
+  addUnidadCurricular(){
+
+    if(this.unidadNew.nombre == "" || this.unidadNew.descripcion == "" || this.unidadNew.creditos == 0 || this.unidadNew.semestre < 1 || this.unidadNew.semestre > 6 || this.idMateria == 0){
+      this.alertError = "Todos los campos son obligatorios, debes seleccionar una materia";
+      document.getElementById("alertaError")!.style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      }, 3000);
+    }
+    else{
+      this.unidadNew.materia = this.materias.find(materia => materia.id == this.idMateria);
+
+      console.log("LO QUE SE ESTA ENVIANDO ES:")
+      this.unidadNew.documento = "";
+      console.log(this.unidadNew);
+
+      this.unidadesServ.newUnidadCurricular(this.unidadNew).subscribe(
+        (data) => {
+          this.semestre1 = []; this.semestre2 = []; this.semestre3 = []; this.semestre4 = []; this.semestre5 = []; this.semestre6 = [];
+          this.ngOnInit();
+          this.alertSuccess = "Unidad curricular agregada correctamente";
+          document.getElementById("alertaSuccess")!.style.display = "block";
+
+          setTimeout(() => {
+            document.getElementById("alertaSuccess")!.style.display = "none";
+          }, 3000);
+
+          this.unidadNew = {id:0, nombre:"", descripcion:"",creditos:0 , documento:"", semestre: 0, materia: this.materiaInterface, previas: []};
+          this.idMateria = 0;
+          this.obtenerMaterias();
+        },
+        (error) => {
+          this.alertError = "Error al agregar unidad curricular";
+          document.getElementById("alertaError")!.style.display = "block";
+
+          setTimeout(() => {
+            document.getElementById("alertaError")!.style.display = "none";
+          }, 3000);
+        })
+    }
+  }
+
+  deleteUnidadCurricular(){
+    this.unidadesServ.deleteUnidadCurricular(this.id_seleccionada).subscribe(
+      (data) => {
+        this.semestre1 = []; this.semestre2 = []; this.semestre3 = []; this.semestre4 = []; this.semestre5 = []; this.semestre6 = [];
+        this.ngOnInit();
+        this.alertSuccess = "Unidad curricular eliminada correctamente";
+        document.getElementById("alertaSuccess")!.style.display = "block";
+
+        setTimeout(() => {
+          document.getElementById("alertaSuccess")!.style.display = "none";
+        }, 3000);
+
+      },
+      (error) => {
+        this.alertError = "Error al eliminar unidad curricular";
+        document.getElementById("alertaError")!.style.display = "block";
+
+        setTimeout(() => {
+          document.getElementById("alertaError")!.style.display = "none";
+        }, 3000);
+      }
+    )
+
+  }
+
+ 
+
+  handleUpload(event: any) {
+    
+    const file = event.target.files[0];
+
+    if(!file){
+       document.getElementById("error-empty-pdf")!.style.display = "block";
+       const btn = document.getElementById("btnAgregarUnidad") as HTMLButtonElement | null;
+       btn!.disabled = true;
+    }
+    else{
+
+      document.getElementById("error-empty-pdf")!.style.display = "none";
+      const btn = document.getElementById("btnAgregarUnidad") as HTMLButtonElement | null;
+      btn!.disabled = false;
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.imgBase64 = reader.result as string;
+        this.unidadNew.documento = this.imgBase64;
+      }
+    }
+  }
+
+  handleUploadEdit(event: any) {
+
+    const file = event.target.files[0];
+
+    if(!file){
+      console.log("ERROR: No se selecciono ningun documento");
+    }
+    else{
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.imgBase64 = reader.result as string;
+        this.unidadEdit.documento = this.imgBase64;
+      }
+    }
+  }
+
+
+
+/* 
+--------------------------------------------------------------
+Collapse NGBootstrap 
+--------------------------------------------------------------
+*/
+public isCollapsed = true;
+
+/* 
+  --------------------------------------------------------------
+  Modal NGBootstrap 
+  --------------------------------------------------------------
+  */
+
+  closeResult = '';
+      
+  // Esta funcion se ejecuta al abrir el modal, en este caso al presionar el boton Eliminar de una noticia
+  open(content: any, unidad:UnidadCurricular) {
+
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+    
+    this.id_seleccionada = unidad.id;
+
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
 }

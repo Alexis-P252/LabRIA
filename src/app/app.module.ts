@@ -20,6 +20,7 @@ import { AuthInterceptorService } from './services/auth-interceptor-service.serv
 import { DocumentosComponent } from './documentos/documentos.component';
 import { UnidadesCurricularesComponent } from './unidades-curriculares/unidades-curriculares.component';
 import { VerdocumentosComponent } from './verdocumentos/verdocumentos.component';
+import { VerUnidadesComponent } from './ver-unidades/ver-unidades.component';
 
 
 
@@ -40,6 +41,7 @@ import { VerdocumentosComponent } from './verdocumentos/verdocumentos.component'
     DocumentosComponent,
     UnidadesCurricularesComponent,
     VerdocumentosComponent,
+    VerUnidadesComponent,
     
   ],
   imports: [
