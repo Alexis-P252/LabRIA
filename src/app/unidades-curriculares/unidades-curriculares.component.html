@@ -1,37 +1,87 @@
 <div class="container my-5">
 
+    <!-- Alertas -->
+    <div class="alert alert-success text-center" id="alertaSuccess" role="alert" >
+        <strong>{{alertSuccess}}</strong> 
+    </div>
+    <div class="alert alert-danger text-center" role="alert" id="alertaError" >
+        <strong>{{alertError}}</strong> 
+    </div>
+
+     <!-- Seccion agregar nueva unidad curricular -->
+     <div class="col mb-4">
+          
+        <div class="d-flex justify-content-end mb-3">
+          <button type="button" class="btn btn-light bold" (click)="collapse.toggle()"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+            +Agregar nueva unidad curricular
+          </button>
+        </div>
+      
+      <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+        <div class="card">
+          <div class="card-body">
+        
+              <label for="nombre" class="col-sm-2 control-label mt-1">Nombre</label>
+              <input type="text" class="form-control" id="nombre" [(ngModel)]="unidadNew.nombre">
+
+              <label for="descripcion" class="col-sm-2 control-label mt-1">Descripción</label>
+              <input type="text" class="form-control" id="descripcion" [(ngModel)]="unidadNew.descripcion" >
+
+              <label for="creditosMinimos" class="col-sm-2 control-label mt-1">Créditos Mínimos</label>
+              <input type="number" class="form-control" id="creditosMinimos" min="1" value="1" [(ngModel)]="unidadNew.creditos" >
+
+              <label for="semestre" class="col-sm-2 control-label mt-1">Semestre</label>
+              <input type="number" class="form-control" id="semestre" min="1" value="1" max="6" [(ngModel)]="unidadNew.semestre">
+
+              <label for="pdf" class="col-sm-2 control-label mt-1">Dócumento PDF</label>
+              <input type="file" class="form-control" id="pdf" accept="application/pdf" required (change)="handleUpload($event)" >
+              <div class="err-empty-pdf" id="error-empty-pdf">Debes subir un documento PDF obligatoriamente</div>
+
+              <label for="pdf" class="col-sm-2 control-label mt-1">Materia</label>
+              <select class="form-select" name="materia" [(ngModel)]="idMateria">
+                <option *ngFor="let m of materias" value="{{m.id}}">{{m.nombre}} </option>
+              </select>
+              <p><b>Por defecto, la categoria es Datos de Interes</b></p>
+
+              <div class="d-flex justify-content-center align-items-center">
+                <button class="btn btn-success mt-3" id="btnAgregarUnidad" (click)="addUnidadCurricular()" >Agregar</button>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
     <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
     
         <ngb-panel title="Primer Semestre">
           <ng-template ngbPanelContent>
-        
             <table class="table table-striped table-hover table-responsive">
             <thead>
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Materia</th>
-              
                 <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row">1</th>
+            <tr *ngFor="let s of semestre1">
+                <th scope="row">{{s.id}}</th>
                 <td>
-                    Principios de Programacion
+                    {{s.nombre}}
                 </td>
-                <td>Programacion</td>
+                <td>{{s.materia.nombre}}</td>
                 <td>
                     <div class="d-flex justify-content-end">
                         <div class="btn-group">
-                            <button class="btn btn-success">Ver</button>
+                            <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
                             <button class="btn btn-primary">Editar</button>
-                            <button class="btn btn-danger">Eliminar</button>
+                            <button class="btn btn-danger" (click)="open(content, s)">Eliminar</button>
                         </div>
                     </div>
-                    
-
                 </td>
             </tr>
             </tbody>
@@ -41,28 +91,187 @@
     
         <ngb-panel title="Segundo Semestre">
             <ng-template ngbPanelContent>
+                <table class="table table-striped table-hover table-responsive">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Materia</th>
+                        <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let s of semestre2">
+                        <th scope="row">{{s.id}}</th>
+                        <td>
+                            {{s.nombre}}
+                        </td>
+                        <td>{{s.materia.nombre}}</td>
+                        <td>
+                            <div class="d-flex justify-content-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
+                                    <button class="btn btn-primary">Editar</button>
+                                    <button class="btn btn-danger" (click)="open(content, s)">Eliminar</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
             </ng-template>
         </ngb-panel>
     
         <ngb-panel title="Tercer Semestre">
             <ng-template ngbPanelContent>
+                <table class="table table-striped table-hover table-responsive">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Materia</th>
+                        <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let s of semestre3">
+                        <th scope="row">{{s.id}}</th>
+                        <td>
+                            {{s.nombre}}
+                        </td>
+                        <td>{{s.materia.nombre}}</td>
+                        <td>
+                            <div class="d-flex justify-content-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
+                                    <button class="btn btn-primary">Editar</button>
+                                    <button class="btn btn-danger" (click)="open(content, s)">Eliminar</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
             </ng-template>
         </ngb-panel>
     
         <ngb-panel title="Cuarto Semestre">
             <ng-template ngbPanelContent>
+                <table class="table table-striped table-hover table-responsive">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Materia</th>
+                        <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let s of semestre4">
+                        <th scope="row">{{s.id}}</th>
+                        <td>
+                            {{s.nombre}}
+                        </td>
+                        <td>{{s.materia.nombre}}</td>
+                        <td>
+                            <div class="d-flex justify-content-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
+                                    <button class="btn btn-primary">Editar</button>
+                                    <button class="btn btn-danger" (click)="open(content, s)">Eliminar</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
             </ng-template>
         </ngb-panel>
     
         <ngb-panel title="Quinto Semestre">
             <ng-template ngbPanelContent>
+                <table class="table table-striped table-hover table-responsive">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Materia</th>
+                        <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let s of semestre5">
+                        <th scope="row">{{s.id}}</th>
+                        <td>
+                            {{s.nombre}}
+                        </td>
+                        <td>{{s.materia.nombre}}</td>
+                        <td>
+                            <div class="d-flex justify-content-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
+                                    <button class="btn btn-primary">Editar</button>
+                                    <button class="btn btn-danger" (click)="open(content, s)">Eliminar</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
             </ng-template>
         </ngb-panel>
     
         <ngb-panel title="Sexto Semestre">
             <ng-template ngbPanelContent>
+                <table class="table table-striped table-hover table-responsive">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Materia</th>
+                        <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let s of semestre6">
+                        <th scope="row">{{s.id}}</th>
+                        <td>
+                            {{s.nombre}}
+                        </td>
+                        <td>{{s.materia.nombre}}</td>
+                        <td>
+                            <div class="d-flex justify-content-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
+                                    <button class="btn btn-primary" >Editar</button>
+                                    <button class="btn btn-danger" (click)="open(content, s)">Eliminar</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
             </ng-template>
         </ngb-panel>
 
     </ngb-accordion>
+
+      <!--- Modal Eliminar -->
+      <ng-template  #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Eliminar Unidad Curricular ID: {{this.id_seleccionada}}</h4>
+   
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="dateOfBirth">Estas por eliminar esta unidad, ¿estás seguro?</label>
+             
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="modal.close('Save click')" (click)="deleteUnidadCurricular()">Eliminar</button>
+        </div>
+      </ng-template>
 </div>

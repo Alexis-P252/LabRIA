@@ -1,3 +1,14 @@
 .container{
     min-height: calc(100vh - 440px);
 }
+
+.alert{
+    display: none;
+}
+
+.err-empty-pdf{
+    color: red;
+    font-size: 15px;
+    font-weight: 600;
+    display: block;
+}
