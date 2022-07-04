@@ -41,31 +41,4 @@ export class AuthenticateService {
   getUser(){
     return localStorage.getItem('user');
   }
-
-  register(username: string, email: string, password: string){
-    return this.http.post(environment.api_url + "Authenticate/register/",
-    {
-      username: username,
-      email: email,
-      password: password
-    },
-    {
-      headers: this.headers
-    });
-  }
-
-  register_admin(username: string, email: string, password: string){
-    return this.http.post(environment.api_url + "Authenticate/register-admin/",
-    {
-      username: username,
-      email: email,
-      password: password
-    },
-    {
-      headers: this.headers
-    });
-  }
-
-
-
 }

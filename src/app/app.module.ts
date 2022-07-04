@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { CarrouselComponent } from './carrousel/carrousel.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
@@ -31,7 +30,6 @@ import { VerUnidadesComponent } from './ver-unidades/ver-unidades.component';
     AppComponent,
     FooterComponent,
     LoginComponent,
-    RegisterComponent,
     CarrouselComponent,
     NavbarComponent,
     HomeComponent,
