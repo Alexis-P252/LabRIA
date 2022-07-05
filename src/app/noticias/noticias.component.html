@@ -24,7 +24,7 @@
           </div>
         
         <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-          <div class="card">
+          <div class="card" *ngIf="isLoading !== true">
             <div class="card-body">
            
                 <label for="titulo" class="col-sm-2 control-label mt-1">Título</label>
@@ -48,7 +48,9 @@
           </div>
         </div>
       </div>
+      <!--- Loader -->
 
+      <app-spinner *ngIf="isLoading == true"></app-spinner>
 
       <!--- Noticia -->
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

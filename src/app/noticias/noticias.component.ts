@@ -22,6 +22,8 @@ export class NoticiasComponent implements OnInit {
   alertError : string = "";
 
   token: string | null = null;
+
+  isLoading = true;
   
   limit = 6;
   offset = 0;
@@ -78,7 +80,17 @@ export class NoticiasComponent implements OnInit {
         this.paginas.push(i);
       }
 
-    })
+    } , error => {
+      this.alertError = "Error al obtener las noticias";
+      document.getElementById("alertaError")!.style.display = "block";
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      }
+      , 3000);
+  }, () => {
+    this.isLoading = false;
+  }
+  );
   }
   
   
