@@ -11,6 +11,8 @@ export class CarrouselComponent implements OnInit {
 
   public Activas: Noticia[] = [];
 
+  isLoading = true;
+
   constructor(private noticiasServ: NoticiasService) { }
 
 
@@ -20,8 +22,12 @@ export class CarrouselComponent implements OnInit {
     this.noticiasServ.getNoticiasActivas().subscribe(
       data => {
         this.Activas = data;
+      }, error => {
+        console.log(error);
+      }, () => {
+        this.isLoading = false;
       }
-    )
+    );
   }
 
 }

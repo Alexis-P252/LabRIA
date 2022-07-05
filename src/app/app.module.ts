@@ -20,6 +20,7 @@ import { DocumentosComponent } from './documentos/documentos.component';
 import { UnidadesCurricularesComponent } from './unidades-curriculares/unidades-curriculares.component';
 import { VerdocumentosComponent } from './verdocumentos/verdocumentos.component';
 import { VerUnidadesComponent } from './ver-unidades/ver-unidades.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 
@@ -40,6 +41,7 @@ import { VerUnidadesComponent } from './ver-unidades/ver-unidades.component';
     UnidadesCurricularesComponent,
     VerdocumentosComponent,
     VerUnidadesComponent,
+    SpinnerComponent,
     
   ],
   imports: [
