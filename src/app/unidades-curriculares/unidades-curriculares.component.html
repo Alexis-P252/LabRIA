@@ -42,7 +42,6 @@
               <select class="form-select" name="materia" [(ngModel)]="idMateria">
                 <option *ngFor="let m of materias" value="{{m.id}}">{{m.nombre}} </option>
               </select>
-              <p><b>Por defecto, la categoria es Datos de Interes</b></p>
 
               <div class="d-flex justify-content-center align-items-center">
                 <button class="btn btn-success mt-3" id="btnAgregarUnidad" (click)="addUnidadCurricular()" >Agregar</button>
@@ -54,7 +53,7 @@
     </div>
     
 
-    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+    <ngb-accordion #acc="ngbAccordion">
     
         <ngb-panel title="Primer Semestre">
           <ng-template ngbPanelContent>

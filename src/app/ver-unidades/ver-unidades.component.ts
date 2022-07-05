@@ -40,4 +40,15 @@ export class VerUnidadesComponent implements OnInit {
     );
   }
 
+  onClcikDownloadPDF(pdf: string){
+    this.downloadPdf(pdf, "Documento_UC");
+  }
+
+  downloadPdf(base64String: string, nombreDocumento: string){
+    const link = document.createElement("a");
+    link.href = base64String;
+    link.download = nombreDocumento+".pdf";
+    link.click();
+  }
+
 }

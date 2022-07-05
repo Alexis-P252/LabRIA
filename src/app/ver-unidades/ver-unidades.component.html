@@ -3,17 +3,19 @@
 <div class="container mt-3">
     <div class="header">
         <h1 class="me-2 mb-0">{{ unidad.nombre }} </h1>
-        <h3><span class="badge rounded-pill bg-primary">SEMESTRE</span></h3>
+        <h3><span class="badge rounded-pill bg-primary">SEMESTRE {{unidad.semestre}}</span></h3>
     </div>
   <h3>Materia: {{ unidad.materia.nombre }}</h3>
   <div class="d-flex">
-    <a class="text-muted pdf me-2"> ->Doc PDF</a>  
+    <a class="text-muted pdf me-2" (click)="onClcikDownloadPDF(unidad.documento)"> ->Doc PDF</a>  
   </div>
   <p>{{ unidad.descripcion }}</p>
   <p>Créditos: {{ unidad.creditos }}</p>
 
   <h3 class="previas">Previas:</h3>
   <div class="previas-container">
-      <a><span class="badge bg-dark me-2" role="button">Previa 1</span></a>
+      <a>
+        <span class="badge bg-dark me-2" role="button">Previa 1</span>
+      </a>
   </div>
 </div>

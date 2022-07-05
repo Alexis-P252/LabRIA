@@ -69,7 +69,7 @@
             >
               <h5 class="card-text m-0 me-3">{{documento.titulo}}</h5>
               <div class="d-flex">
-                <a class="text-muted pdf me-2" (click)="onClcikDownloadPDF(documento.documentoPDF)"> ->Doc PDF</a>  
+                <a class="text-muted pdf me-2" (click)="openFullscreen(content2, documento.documentoPDF)"> ->Doc PDF</a>  
                 <div class="d-flex">
                   <span *ngIf="documento.activo == true" class="badge bg-primary">Activo</span>
                 </div>
@@ -132,13 +132,25 @@
             <input ngbButton type="radio" class="btn-check" value="No"> No
           </label>
         </div>
-     
-  
-
-    
+ 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="modal.close('Save click')" (click)="editDocumento()">Editar</button>
+      </div>
+    </ng-template>
+
+
+     <!--- Modal Ver PDF -->
+     <ng-template #content2 let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">Documento PDF</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <iframe type="application/pdf" [src]="sanitizePDF(pdf)" height="100%" width="100%"> </iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>
       </div>
     </ng-template>
 

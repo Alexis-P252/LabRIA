@@ -34,6 +34,8 @@ export class DocumentosComponent implements OnInit {
   public paginas : Array<number> = [];
   public pagina_selecionada: number = this.nro_paginas;
 
+  public pdf = "";
+
   constructor(
     private documentosServ: DocumentosService, private modalService: NgbModal, private sanitizer: DomSanitizer
   ) { }
@@ -197,18 +199,6 @@ export class DocumentosComponent implements OnInit {
 
   }
 
-  onClcikDownloadPDF(pdf: string){
-    this.downloadPdf(pdf, "Documento");
-  }
-
-  downloadPdf(base64String: string, nombreDocumento: string){
-    const link = document.createElement("a");
-    link.href = base64String;
-    link.download = nombreDocumento+".pdf";
-    link.click();
-  }
-
-
   sanitizePDF(pdf: string){
     return this.sanitizer.bypassSecurityTrustResourceUrl(pdf);
   }
@@ -248,6 +238,11 @@ export class DocumentosComponent implements OnInit {
   }
 
 
+
+  openFullscreen(content2, documentoPDF) {
+    this.modalService.open(content2, { fullscreen: true });
+    this.pdf = documentoPDF;
+  }
   /* 
   --------------------------------------------------------------
   Collapse NGBootstrap 
