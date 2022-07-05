@@ -73,10 +73,6 @@ export class UnidadesCurricularesComponent implements OnInit {
     else{
       this.unidadNew.materia = this.materias.find(materia => materia.id == this.idMateria);
 
-      console.log("LO QUE SE ESTA ENVIANDO ES:")
-      this.unidadNew.documento = "";
-      console.log(this.unidadNew);
-
       this.unidadesServ.newUnidadCurricular(this.unidadNew).subscribe(
         (data) => {
           this.semestre1 = []; this.semestre2 = []; this.semestre3 = []; this.semestre4 = []; this.semestre5 = []; this.semestre6 = [];
@@ -100,6 +96,43 @@ export class UnidadesCurricularesComponent implements OnInit {
             document.getElementById("alertaError")!.style.display = "none";
           }, 3000);
         })
+    }
+  }
+
+  editUnidadCurricular(){
+    if(this.unidadEdit.nombre == "" || this.unidadEdit.descripcion == "" || this.unidadEdit.creditos == 0 || this.unidadEdit.semestre < 1 || this.unidadEdit.semestre > 6){
+      this.alertError = "Todos los campos son obligatorios, semestre debe ser entre 1 y 6, creditos minimos debe ser mayor a 0";
+      document.getElementById("alertaError")!.style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      }, 3000);
+    }
+    else{
+      this.unidadesServ.updateUnidadCurricular(this.unidadEdit).subscribe(
+        (data) => {
+          this.semestre1 = []; this.semestre2 = []; this.semestre3 = []; this.semestre4 = []; this.semestre5 = []; this.semestre6 = [];
+          this.ngOnInit();
+          this.alertSuccess = "Unidad curricular editada correctamente";
+          document.getElementById("alertaSuccess")!.style.display = "block";
+
+          setTimeout(() => {
+            document.getElementById("alertaSuccess")!.style.display = "none";
+          }, 3000);
+
+          this.unidadEdit = {id:0, nombre:"", descripcion:"",creditos:0 , documento:"", semestre: 0, materia: this.materiaInterface, previas: []};
+          this.idMateria = 0;
+          this.obtenerMaterias();
+        }
+        ,(error) => {
+          this.alertError = "Error al editar unidad curricular";
+          document.getElementById("alertaError")!.style.display = "block";
+
+          setTimeout(() => {
+            document.getElementById("alertaError")!.style.display = "none";
+          }, 3000);
+        }
+      );
     }
   }
 
@@ -202,6 +235,37 @@ public isCollapsed = true;
   }
 
   private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  /* 
+  --------------------------------------------------------------
+  Modal NGBootstrap2 
+  --------------------------------------------------------------
+  */
+
+  closeResult2 = '';
+      
+  // Esta funcion se ejecuta al abrir el modal, en este caso al presionar el boton Editar de una noticia
+  open2(content2: any, unidad:UnidadCurricular) {
+
+    this.unidadEdit =  JSON.parse(JSON.stringify(unidad));  
+
+    this.modalService.open(content2, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult2 = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult2 = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+     
+  }
+
+  private getDismissReason2(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
