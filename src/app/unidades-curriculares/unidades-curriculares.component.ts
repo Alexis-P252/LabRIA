@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {UnidaesCurricularesService} from '../services/unidades-curriculares.service';
+import { PreviasService } from '../services/previas.service';
 import { MateriasService } from '../services/materias.service'; 
-import {Materia, UnidadCurricular} from '../interfaces';
+import {Materia, UnidadCurricular, Previa} from '../interfaces';
 
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, ModalDismissReasons, NgbNavConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-unidades-curriculares',
   templateUrl: './unidades-curriculares.component.html',
-  styleUrls: ['./unidades-curriculares.component.css']
+  styleUrls: ['./unidades-curriculares.component.css'],
+  providers: [NgbNavConfig]
 })
 export class UnidadesCurricularesComponent implements OnInit {
 
@@ -16,18 +18,24 @@ export class UnidadesCurricularesComponent implements OnInit {
   alertError: string = "";
   imgBase64: string = "";
   id_seleccionada: number = 0;
+  previa_seleccionada: number = 0;
+  previa_seleccionada_delete: any;
+  tipoPrevia: string = "";
 
   idMateria: number = 0;
   materiaInterface: Materia = {id:0, nombre: "",  descripcion: "", creditosMinimos: 0};
 
   unidadNew: UnidadCurricular = {id:0, nombre:"", descripcion:"",creditos:0 , documento:"", semestre: 0, materia: this.materiaInterface, previas: []};
   unidadEdit: UnidadCurricular = {id:0, nombre:"", descripcion:"",creditos:0 , documento:"", semestre: 0, materia: this.materiaInterface, previas: []};
+  previa: Previa = {unidadCurricular: 0, previa: 0, tipo: ""};
 
   unidades: any;
   materias: any;
   semestre1: UnidadCurricular[] = []; semestre2: UnidadCurricular[] = []; semestre3: UnidadCurricular[] = []; semestre4: UnidadCurricular[] = []; semestre5: UnidadCurricular[] = []; semestre6: UnidadCurricular[] = [];
 
-  constructor(private unidadesServ: UnidaesCurricularesService, private materiasServ: MateriasService, private modalService: NgbModal) { }
+  constructor(private unidadesServ: UnidaesCurricularesService, private previasServ: PreviasService, private materiasServ: MateriasService, private modalService: NgbModal, config: NgbNavConfig) { }
+
+  
 
   ngOnInit(): void {
     this.unidadesServ.getUnidadesCurriculares().subscribe(
@@ -157,8 +165,65 @@ export class UnidadesCurricularesComponent implements OnInit {
           document.getElementById("alertaError")!.style.display = "none";
         }, 3000);
       }
-    )
+    );
+  }
 
+  addPrevia(){
+    if(this.previa_seleccionada == 0){
+      this.alertError = "Debe seleccionar una unidad curricular";
+      document.getElementById("alertaError")!.style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      }, 3000);
+    }
+
+    else if(this.previa_seleccionada == this.unidadEdit.id){
+      this.alertError = "No puedes agregar una unidad curricular como previa a si misma";
+      document.getElementById("alertaError")!.style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      }, 3000);
+    }
+    else{
+      this.previa.unidadCurricular = this.unidadEdit.id;
+      this.previa.previa = this.previa_seleccionada;
+      if(this.tipoPrevia == ""){
+        this.previa.tipo = "Examen";
+      }
+      else{
+        this.previa.tipo = this.tipoPrevia;
+      }
+
+      this.previasServ.newPrevia(this.previa).subscribe(
+        (data) => {
+          this.semestre1 = []; this.semestre2 = []; this.semestre3 = []; this.semestre4 = []; this.semestre5 = []; this.semestre6 = [];
+          this.ngOnInit();
+          this.alertSuccess = "Previa agregada correctamente";
+          document.getElementById("alertaSuccess")!.style.display = "block";
+
+          setTimeout(() => {
+            document.getElementById("alertaSuccess")!.style.display = "none";
+          }
+          , 3000);
+        },
+        (error) => {
+          this.alertError = "Error al agregar previa";
+          document.getElementById("alertaError")!.style.display = "block";
+
+          setTimeout(() => {
+            document.getElementById("alertaError")!.style.display = "none";
+          }
+          , 3000);
+        }
+      );
+
+    }
+  }
+
+  deletePrevia(){
+   
   }
 
  
@@ -255,7 +320,9 @@ public isCollapsed = true;
   // Esta funcion se ejecuta al abrir el modal, en este caso al presionar el boton Editar de una noticia
   open2(content2: any, unidad:UnidadCurricular) {
 
-    this.unidadEdit =  JSON.parse(JSON.stringify(unidad));  
+    this.unidadEdit =  JSON.parse(JSON.stringify(unidad));
+    console.log(this.unidadEdit.previas);
+    console.log(this.unidadEdit);  
 
     this.modalService.open(content2, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult2 = `Closed with: ${result}`;
@@ -274,5 +341,7 @@ public isCollapsed = true;
       return `with: ${reason}`;
     }
   }
+
+
 
 }

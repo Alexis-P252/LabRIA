@@ -15,7 +15,7 @@
   <h3 class="previas">Previas:</h3>
   <div class="previas-container">
       <a>
-        <span class="badge bg-dark me-2" role="button">Previa 1</span>
+        <span *ngFor="let p of unidad.previas" class="badge bg-dark me-2" role="button">{{p.previa.nombre}}</span>
       </a>
   </div>
 </div>

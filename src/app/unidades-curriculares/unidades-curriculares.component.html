@@ -282,29 +282,70 @@
    
         </div>
         <div class="modal-body">
-          <label for="nombre" class="col-sm-2 control-label mt-1">Nombre</label>
-          <input type="text" class="form-control" id="nombre" [(ngModel)]="unidadEdit.nombre">
+          
+        
+          <ul ngbNav #nav="ngbNav" class="nav-tabs">
+            <li ngbNavItem>
+              <a ngbNavLink>Datos</a>
+              <ng-template ngbNavContent>
+                <label for="nombre" class="col-sm-2 control-label mt-1">Nombre</label>
+                <input type="text" class="form-control" id="nombre" [(ngModel)]="unidadEdit.nombre">
 
-          <label for="descripcion" class="col-sm-2 control-label mt-1">Descripcion</label>
-          <input type="text" class="form-control" id="descripcion" [(ngModel)]="unidadEdit.descripcion" >
+                <label for="descripcion" class="col-sm-2 control-label mt-1">Descripcion</label>
+                <input type="text" class="form-control" id="descripcion" [(ngModel)]="unidadEdit.descripcion" >
 
-          <label for="creditos" class="col-sm-2 control-label mt-1">Créditos</label>
-          <input type="text" class="form-control" id="creditos" [(ngModel)]="unidadEdit.creditos" >
+                <label for="creditos" class="col-sm-2 control-label mt-1">Créditos</label>
+                <input type="text" class="form-control" id="creditos" [(ngModel)]="unidadEdit.creditos" >
 
-          <label for="semestre" class="col-sm-2 control-label mt-1">Semestre</label>
-          <input type="text" class="form-control" id="semestre" [(ngModel)]="unidadEdit.semestre" >
+                <label for="semestre" class="col-sm-2 control-label mt-1">Semestre</label>
+                <input type="text" class="form-control" id="semestre" [(ngModel)]="unidadEdit.semestre" >
 
-          <label for="pdf" class="col control-label mt-1">Documento PDF</label>
-          <input type="file" class="form-control" id="pdf" accept="application/pdf" (change)="handleUploadEdit($event)"  required [(ngModel)]="unidadEdit.documento">
-          <div class="aviso-imagen" id="aviso-imagen">No subas un documento si no quieres cambiarlo ☝</div>
+                <label for="pdf" class="col control-label mt-1">Documento PDF</label>
+                <input type="file" class="form-control" id="pdf" accept="application/pdf" (change)="handleUploadEdit($event)"  required [(ngModel)]="unidadEdit.documento">
+                <div class="aviso-imagen" id="aviso-imagen">No subas un documento si no quieres cambiarlo ☝</div>
 
-         
+                <div class="d-flex justify-content-end align-items-center">
+                    <button type="button" class="btn btn-primary mt-2" (click)="modal.close('Save click')" (click)="editUnidadCurricular()">Editar</button>
+                </div>
+                
+              </ng-template>
+            </li>
+            <li ngbNavItem>
+              <a ngbNavLink>Previas</a>
+              <ng-template ngbNavContent>
+                <h5>Agregar previa</h5>
+                <select class="form-select" name="previas" [(ngModel)]="previa_seleccionada">
+                    <option *ngFor="let p of unidades" value="{{p.id}}">{{p.nombre}}</option>
+                </select>
+                <p class="mt-2">Elige el tipo de previa</p>
+                <select class="form-select" name="tipoPrevia" [(ngModel)]="tipoPrevia">
+                    <option value="Examen" selected>Examen</option>
+                    <option value="Curso">Curso</option>
+                </select>
+                <small> El tipo de previa por defecto es Examen</small>
+                <div class="d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-primary mt-2" (click)="addPrevia()" (click)="modal.close('Save click')">Agregar</button>
+                </div>
+                <hr>
+                <h5>Eliminar Previa</h5>
+                <select class="form-select" name="previasEliminar" [(ngModel)]="previa_seleccionada_delete">
+                    <option *ngFor="let p of unidadEdit.previas"  value="{{p.unidadCurricular}}">{{p.unidadCurricular}}</option>
+                </select>
+                
 
-      
+                <div class="d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-danger mt-2" (click)="deletePrevia()" (click)="modal.close('Save click')">Eliminar</button>
+                </div>
+              </ng-template>
+            </li>
+          </ul>
+          
+          <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="modal.close('Save click')" (click)="editUnidadCurricular()">Editar</button>
+          
         </div>
       </ng-template>
 
-</div>
+    </div>  
