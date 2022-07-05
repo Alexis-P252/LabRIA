@@ -2,6 +2,8 @@
     <h2 class="text-center mt-3" *ngIf="categoria =='OPORTUNIDADES_LABORALES'">Oportunidades Laborales</h2>
     <h2 class="text-center mt-3" *ngIf="categoria =='INFORMACION_CARRERA'">Información de la carrera</h2>
     <h2 class="text-center mt-3" *ngIf="categoria =='DATOS_DE_INTERES'">Datos de Interes</h2>
+    
+    <app-spinner *ngIf="isLoading == true"></app-spinner>
 
     <div class="alert alert-info text-center mt-5" id="alertaVacio" role="alert" *ngIf="Documentos.length == 0" >
         <strong>Vaya, parece que no hay nada para ver aquí</strong> 

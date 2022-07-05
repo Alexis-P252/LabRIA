@@ -19,6 +19,8 @@ export class VerdocumentosComponent implements OnInit {
   public categoria: string = "";
   public Documentos: any;
 
+  isLoading: boolean = true;
+
   constructor(private documentosServ: DocumentosService, private route: ActivatedRoute, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
@@ -34,7 +36,11 @@ export class VerdocumentosComponent implements OnInit {
       console.log(this.Documentos);
     }, error => {
       console.log(error);
-    })
+    },
+    () => {
+      this.isLoading = false;
+    }
+    );
   }
 
   onClcikDownloadPDF(pdf: string){

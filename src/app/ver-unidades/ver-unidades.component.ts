@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class VerUnidadesComponent implements OnInit {
 
+  isLoading: boolean = true;
   private routeSub: Subscription = new Subscription;
   id: number = 0;
   unidad: any;
@@ -30,18 +31,13 @@ export class VerUnidadesComponent implements OnInit {
     this.unidadesServ.getUnidadCurricular(this.id).subscribe(
       (data) => {
         this.unidad = data;
-
       },
       (error) => {
-
+      },
+      () => {
+        this.isLoading = false;
       }
     );
-
-
-
-
-
-
   }
 
 }

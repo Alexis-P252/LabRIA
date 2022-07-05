@@ -12,6 +12,7 @@ import { Noticia } from '../interfaces';
 })
 export class VerNoticiaComponent implements OnInit {
   
+  isLoading: boolean = true;
   public id: number = 0;
   public Noticia: any;
   private routeSub: Subscription = new Subscription;
@@ -28,8 +29,12 @@ export class VerNoticiaComponent implements OnInit {
 
     // Ahora obtengo la noticia de la API
     this.NoticiaServ.getNoticia(this.id).subscribe(data => {
-      this.Noticia = data;})
-
+      this.Noticia = data;},
+      error => {},
+      () => {
+        this.isLoading = false;
+      } 
+      );
   }
 
 }

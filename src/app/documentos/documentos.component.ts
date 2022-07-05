@@ -12,6 +12,8 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 })
 export class DocumentosComponent implements OnInit {
 
+  isLoading: boolean = true;
+
   alertSuccess : string = "";
   alertError : string = "";
 
@@ -54,7 +56,18 @@ export class DocumentosComponent implements OnInit {
       for(let i = 1; i <= this.nro_paginas; i++){
         this.paginas.push(i);
       }  
-    });
+    },
+    error => {
+      this.alertError = "Error al cargar los documentos";
+      document.getElementById("alertaError")!.style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      }
+      , 3000);
+    },
+    () => { this.isLoading = false; }
+    );
   }
 
   cambiarPagina(event: any){

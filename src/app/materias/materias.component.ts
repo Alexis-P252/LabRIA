@@ -11,6 +11,8 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 })
 export class MateriasComponent implements OnInit {
 
+  isLoading: boolean = true;
+
   alertSuccess: string = "";
   alertError: string = "";
 
@@ -32,8 +34,18 @@ export class MateriasComponent implements OnInit {
   getAllMaterias(){
     this.materiasServ.getMaterias().subscribe( data => {
       this.Materias = data;
-      console.log(this.Materias);
-    })
+    },
+    error => {
+      this.alertError = "Hubo un error al obtener las materias";
+      document.getElementById("alertaError")!.style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      } , 3000);
+    },
+    () => {
+      this.isLoading = false;
+    });
   }
 
   addMateria(){
