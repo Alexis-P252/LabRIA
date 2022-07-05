@@ -31,10 +31,8 @@
                 <div class="" *ngIf="documento.tipo == 'DATOS_DE_INTERES'">Datos de Interes </div>
                 <div class="" *ngIf="documento.tipo == 'OPORTUNIDADES_LABORALES'">Oportunidades laborales</div>
                 <div class="" *ngIf="documento.tipo == 'INFORMACION_CARRERA'">Informacion de la carrera</div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="">
-                    <iframe type="application/pdf" [src]="sanitizePDF(documento.documentoPDF)" height="100%" width="130%"> </iframe>
-                  </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <iframe type="application/pdf" [src]="sanitizePDF(documento.documentoPDF)" height="auto" width="100%"> </iframe>
                 </div>
               </div>
             </div>
