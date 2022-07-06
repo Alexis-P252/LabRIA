@@ -7,12 +7,12 @@
     </div>
   <h3>Materia: {{ unidad.materia.nombre }}</h3>
   <div class="d-flex">
-    <a class="text-muted pdf me-2" (click)="openFullscreen(content, unidad.documento)"> ->Doc PDF</a>  
+    <a class="text-muted pdf me-2" (click)="openFullscreen(content, unidad.documento)" *ngIf="isLoading == false"> ->Doc PDF</a>  
   </div>
   <p>{{ unidad.descripcion }}</p>
   <p>Créditos: {{ unidad.creditos }}</p>
 
-  <h3 class="previas">Previas:</h3>
+  <h3 class="previas" *ngIf="isLoading == false">Previas:</h3>
   <div class="previas-container">
       <a *ngFor="let p of unidad.previas" routerLink="/unidad/{{p.previa.id}}" target="_blank">
         <span class="badge bg-dark me-2" role="button">{{p.previa.nombre}}</span>

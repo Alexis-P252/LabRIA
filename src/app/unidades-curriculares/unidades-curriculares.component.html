@@ -60,7 +60,7 @@
             <table class="table table-striped table-hover table-responsive">
             <thead>
             <tr>
-                <th scope="col">ID</th>
+                <th scope="col" *ngIf="token != null">ID</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Materia</th>
                 <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
@@ -68,7 +68,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let s of semestre1">
-                <th scope="row">{{s.id}}</th>
+                <th scope="row" *ngIf="token != null">{{s.id}}</th>
                 <td>
                     {{s.nombre}}
                 </td>
@@ -93,7 +93,7 @@
                 <table class="table table-striped table-hover table-responsive">
                     <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col" *ngIf="token != null">ID</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Materia</th>
                         <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
@@ -101,7 +101,7 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let s of semestre2">
-                        <th scope="row">{{s.id}}</th>
+                        <th scope="row" *ngIf="token != null">{{s.id}}</th>
                         <td>
                             {{s.nombre}}
                         </td>
@@ -126,7 +126,7 @@
                 <table class="table table-striped table-hover table-responsive">
                     <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col" *ngIf="token != null">ID</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Materia</th>
                         <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
@@ -134,7 +134,7 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let s of semestre3">
-                        <th scope="row">{{s.id}}</th>
+                        <th scope="row" *ngIf="token != null">{{s.id}}</th>
                         <td>
                             {{s.nombre}}
                         </td>
@@ -159,7 +159,7 @@
                 <table class="table table-striped table-hover table-responsive">
                     <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col" *ngIf="token != null">ID</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Materia</th>
                         <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
@@ -167,7 +167,7 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let s of semestre4">
-                        <th scope="row">{{s.id}}</th>
+                        <th scope="row" *ngIf="token != null">{{s.id}}</th>
                         <td>
                             {{s.nombre}}
                         </td>
@@ -192,7 +192,7 @@
                 <table class="table table-striped table-hover table-responsive">
                     <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col" *ngIf="token != null">ID</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Materia</th>
                         <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
@@ -200,7 +200,7 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let s of semestre5">
-                        <th scope="row">{{s.id}}</th>
+                        <th scope="row" *ngIf="token != null">{{s.id}}</th>
                         <td>
                             {{s.nombre}}
                         </td>
@@ -225,7 +225,7 @@
                 <table class="table table-striped table-hover table-responsive">
                     <thead>
                     <tr>
-                        <th scope="col">ID</th>
+                        <th scope="col" *ngIf="token != null">ID</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Materia</th>
                         <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
@@ -233,7 +233,7 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let s of semestre6">
-                        <th scope="row">{{s.id}}</th>
+                        <th scope="row" *ngIf="token != null">{{s.id}}</th>
                         <td>
                             {{s.nombre}}
                         </td>

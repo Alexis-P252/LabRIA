@@ -27,7 +27,7 @@ export class DocumentosComponent implements OnInit {
   // Linkeada al formulario de editar una noticia
   DocumentoEdit: Documento = {id: 0,titulo:"",tipo:"",documentoPDF:"",activo:true};
 
-  limit = 9;
+  limit = 15;
   offset = 0;
   nro_paginas : number = 1;
 

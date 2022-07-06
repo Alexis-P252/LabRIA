@@ -28,3 +28,8 @@
 .alert{
     display: none;
 }
+
+
+.card-body{
+    min-height: 250px;
+}

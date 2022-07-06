@@ -117,6 +117,7 @@ export class NoticiasComponent implements OnInit {
           setTimeout(() => {
             document.getElementById("alertaSuccess")!.style.display = "none";
           }, 3000);
+          this.NoticiaNew = {id: 0,titulo:"",descripcion:"",imagen:"",fechaCaducidad:""};
 
         }),
         (error: any) => {
