@@ -41,7 +41,7 @@ export class UnidaesCurricularesService {
     });
   }
 
-  updateUnidadCurricular(unidadCurricular: UnidadCurricular){
+  updateUnidadCurricular(unidadCurricular: any){
     const url = environment.api_url + "UnidadesCurriculares/" + unidadCurricular.id;
     return this.http.put(url,{
       id: unidadCurricular.id,

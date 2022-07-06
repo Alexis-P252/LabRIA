@@ -32,6 +32,14 @@ export interface Previa{
     tipo: string;
 }
 
+export interface Previatura{
+    id: number;
+    unidadCurricular: UnidadCurricular;
+    previa: UnidadCurricular;
+    tipoPrevia: string;    
+}
+
+
 export interface UnidadCurricular{
     id: number;
     nombre: string;
@@ -42,3 +50,15 @@ export interface UnidadCurricular{
     materia: Materia;
     previas: Previa[];
 }
+
+export interface UnidadCurricular2{
+    id: number;
+    nombre: string;
+    descripcion: string;
+    creditos: number;
+    documento: string;
+    semestre: number;
+    materia: Materia;
+    previas: Previatura[];
+}
+

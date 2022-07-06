@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UnidaesCurricularesService} from '../services/unidades-curriculares.service';
 import { PreviasService } from '../services/previas.service';
 import { MateriasService } from '../services/materias.service'; 
-import {Materia, UnidadCurricular, Previa} from '../interfaces';
+import {Materia, UnidadCurricular, UnidadCurricular2, Previa} from '../interfaces';
 
 import {NgbModal, ModalDismissReasons, NgbNavConfig} from '@ng-bootstrap/ng-bootstrap';
 
@@ -14,19 +14,22 @@ import {NgbModal, ModalDismissReasons, NgbNavConfig} from '@ng-bootstrap/ng-boot
 })
 export class UnidadesCurricularesComponent implements OnInit {
 
+  token: string = null;
+
   alertSuccess: string = "";
   alertError: string = "";
   imgBase64: string = "";
   id_seleccionada: number = 0;
   previa_seleccionada: number = 0;
-  previa_seleccionada_delete: any;
+  previa_seleccionada_delete: number = 0
   tipoPrevia: string = "";
 
   idMateria: number = 0;
   materiaInterface: Materia = {id:0, nombre: "",  descripcion: "", creditosMinimos: 0};
 
   unidadNew: UnidadCurricular = {id:0, nombre:"", descripcion:"",creditos:0 , documento:"", semestre: 0, materia: this.materiaInterface, previas: []};
-  unidadEdit: UnidadCurricular = {id:0, nombre:"", descripcion:"",creditos:0 , documento:"", semestre: 0, materia: this.materiaInterface, previas: []};
+
+  unidadEdit: UnidadCurricular2 = {id:0, nombre:"", descripcion:"",creditos:0 , documento:"", semestre: 0, materia: this.materiaInterface, previas: []};
   previa: Previa = {unidadCurricular: 0, previa: 0, tipo: ""};
 
   unidades: any;
@@ -38,6 +41,9 @@ export class UnidadesCurricularesComponent implements OnInit {
   
 
   ngOnInit(): void {
+
+    this.token = localStorage.getItem('token');
+
     this.unidadesServ.getUnidadesCurriculares().subscribe(
       (unidades) => {
         this.unidades = unidades;
@@ -186,6 +192,14 @@ export class UnidadesCurricularesComponent implements OnInit {
         document.getElementById("alertaError")!.style.display = "none";
       }, 3000);
     }
+    else if(this.tienePrevia(this.unidadEdit, this.previa_seleccionada)){
+      this.alertError = "La unidad curricular ya tiene esa previa";
+      document.getElementById("alertaError")!.style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      }, 3000);
+    }
     else{
       this.previa.unidadCurricular = this.unidadEdit.id;
       this.previa.previa = this.previa_seleccionada;
@@ -223,7 +237,39 @@ export class UnidadesCurricularesComponent implements OnInit {
   }
 
   deletePrevia(){
-   
+    if(this.previa_seleccionada_delete == 0){
+      this.alertError = "Debe seleccionar una previa";
+      document.getElementById("alertaError")!.style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("alertaError")!.style.display = "none";
+      }, 3000);
+    }
+    else{
+      this.previasServ.deletePrevia(this.previa_seleccionada_delete).subscribe(
+        (data) => {
+          this.semestre1 = []; this.semestre2 = []; this.semestre3 = []; this.semestre4 = []; this.semestre5 = []; this.semestre6 = [];
+          this.ngOnInit();
+          this.alertSuccess = "Previa eliminada correctamente";
+          document.getElementById("alertaSuccess")!.style.display = "block";
+
+          setTimeout(() => {
+            document.getElementById("alertaSuccess")!.style.display = "none";
+          }
+          , 3000);
+
+        },
+        (error) => {
+          this.alertError = "Error al eliminar previa";
+          document.getElementById("alertaError")!.style.display = "block";
+
+          setTimeout(() => {
+            document.getElementById("alertaError")!.style.display = "none";
+          }
+          , 3000);
+        }
+      );
+    }
   }
 
  
@@ -267,6 +313,17 @@ export class UnidadesCurricularesComponent implements OnInit {
         this.unidadEdit.documento = this.imgBase64;
       }
     }
+  }
+
+
+  // Esta funcion comprueba si una unidad curricular ya tiene como previa a la unidad con id pasada por parametro
+  tienePrevia(unidad: UnidadCurricular2, id:number){
+    for(let i = 0; i < unidad.previas.length; i++){
+      if(unidad.previas[i].previa.id == id){
+        return true;
+      }
+    }
+    return false;
   }
 
 

@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {UnidaesCurricularesService} from '../services/unidades-curriculares.service';
 import { UnidadCurricular } from '../interfaces';
 
-
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-ver-unidades',
@@ -17,9 +19,10 @@ export class VerUnidadesComponent implements OnInit {
   private routeSub: Subscription = new Subscription;
   id: number = 0;
   unidad: any;
+  pdf: string = "";
   
 
-  constructor(private unidadesServ: UnidaesCurricularesService, private route: ActivatedRoute) { }
+  constructor(private unidadesServ: UnidaesCurricularesService, private route: ActivatedRoute, private modalService: NgbModal, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
 
@@ -40,15 +43,15 @@ export class VerUnidadesComponent implements OnInit {
     );
   }
 
-  onClcikDownloadPDF(pdf: string){
-    this.downloadPdf(pdf, "Documento_UC");
+  sanitizePDF(pdf: string){
+    return this.sanitizer.bypassSecurityTrustResourceUrl(pdf);
   }
 
-  downloadPdf(base64String: string, nombreDocumento: string){
-    const link = document.createElement("a");
-    link.href = base64String;
-    link.download = nombreDocumento+".pdf";
-    link.click();
+  openFullscreen(content, documentoPDF) {
+    this.modalService.open(content, { fullscreen: true });
+    this.pdf = documentoPDF;
   }
+
+  
 
 }

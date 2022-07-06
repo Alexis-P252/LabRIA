@@ -9,7 +9,7 @@
     </div>
 
      <!-- Seccion agregar nueva unidad curricular -->
-     <div class="col mb-4">
+     <div class="col mb-4" *ngIf="token != null">
           
         <div class="d-flex justify-content-end mb-3">
           <button type="button" class="btn btn-light bold" (click)="collapse.toggle()"
@@ -77,8 +77,8 @@
                     <div class="d-flex justify-content-end">
                         <div class="btn-group">
                             <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
-                            <button class="btn btn-primary" (click)="open2(content2, s)">Editar</button>
-                            <button class="btn btn-danger" (click)="open(content, s)">Eliminar</button>
+                            <button class="btn btn-primary" *ngIf="token != null" (click)="open2(content2, s)">Editar</button>
+                            <button class="btn btn-danger" *ngIf="token != null" (click)="open(content, s)">Eliminar</button>
                         </div>
                     </div>
                 </td>
@@ -110,8 +110,8 @@
                             <div class="d-flex justify-content-end">
                                 <div class="btn-group">
                                     <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
-                                    <button class="btn btn-primary" (click)="open2(content2, s)">Editar</button>
-                                    <button class="btn btn-danger" (click)="open(content, s)">Eliminar</button>
+                                    <button class="btn btn-primary" *ngIf="token != null" (click)="open2(content2, s)">Editar</button>
+                                    <button class="btn btn-danger" *ngIf="token != null" (click)="open(content, s)">Eliminar</button>
                                 </div>
                             </div>
                         </td>
@@ -143,8 +143,8 @@
                             <div class="d-flex justify-content-end">
                                 <div class="btn-group">
                                     <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
-                                    <button class="btn btn-primary" (click)="open2(content2, s)">Editar</button>
-                                    <button class="btn btn-danger" (click)="open(content, s)">Eliminar</button>
+                                    <button class="btn btn-primary" *ngIf="token != null" (click)="open2(content2, s)">Editar</button>
+                                    <button class="btn btn-danger" *ngIf="token != null" (click)="open(content, s)">Eliminar</button>
                                 </div>
                             </div>
                         </td>
@@ -176,8 +176,8 @@
                             <div class="d-flex justify-content-end">
                                 <div class="btn-group">
                                     <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
-                                    <button class="btn btn-primary" (click)="open2(content2, s)">Editar</button>
-                                    <button class="btn btn-danger" (click)="open(content, s)">Eliminar</button>
+                                    <button class="btn btn-primary" *ngIf="token != null" (click)="open2(content2, s)">Editar</button>
+                                    <button class="btn btn-danger" *ngIf="token != null" (click)="open(content, s)">Eliminar</button>
                                 </div>
                             </div>
                         </td>
@@ -209,8 +209,8 @@
                             <div class="d-flex justify-content-end">
                                 <div class="btn-group">
                                     <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
-                                    <button class="btn btn-primary" (click)="open2(content2, s)">Editar</button>
-                                    <button class="btn btn-danger" (click)="open(content, s)">Eliminar</button>
+                                    <button class="btn btn-primary" *ngIf="token != null" (click)="open2(content2, s)">Editar</button>
+                                    <button class="btn btn-danger" *ngIf="token != null" (click)="open(content, s)">Eliminar</button>
                                 </div>
                             </div>
                         </td>
@@ -242,8 +242,8 @@
                             <div class="d-flex justify-content-end">
                                 <div class="btn-group">
                                     <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
-                                    <button class="btn btn-primary" (click)="open2(content2, s)" >Editar</button>
-                                    <button class="btn btn-danger" (click)="open(content, s)">Eliminar</button>
+                                    <button class="btn btn-primary" *ngIf="token != null" (click)="open2(content2, s)" >Editar</button>
+                                    <button class="btn btn-danger" *ngIf="token != null" (click)="open(content, s)">Eliminar</button>
                                 </div>
                             </div>
                         </td>
@@ -322,14 +322,14 @@
                     <option value="Examen" selected>Examen</option>
                     <option value="Curso">Curso</option>
                 </select>
-                <small> El tipo de previa por defecto es Examen</small>
+                <small> <b>El tipo de previa por defecto es Examen</b></small>
                 <div class="d-flex justify-content-center align-items-center">
                     <button type="button" class="btn btn-primary mt-2" (click)="addPrevia()" (click)="modal.close('Save click')">Agregar</button>
                 </div>
                 <hr>
                 <h5>Eliminar Previa</h5>
                 <select class="form-select" name="previasEliminar" [(ngModel)]="previa_seleccionada_delete">
-                    <option *ngFor="let p of unidadEdit.previas"  value="{{p.unidadCurricular}}">{{p.unidadCurricular}}</option>
+                    <option *ngFor="let p of unidadEdit.previas"  value="{{p.id}}">{{p.previa.nombre}}</option>
                 </select>
                 
 
