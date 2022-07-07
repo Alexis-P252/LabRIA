@@ -23,7 +23,7 @@ export class CarrouselComponent implements OnInit {
       data => {
         this.Activas = data;
       }, error => {
-        console.log(error);
+    
       }, () => {
         this.isLoading = false;
       }

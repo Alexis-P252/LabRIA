@@ -37,9 +37,9 @@ export class VerdocumentosComponent implements OnInit {
     // Ahora obtengo los documentos de la API
     this.documentosServ.getDocumentosActivos(this.categoria).subscribe( data => {
       this.Documentos = data;
-      console.log(this.Documentos);
+      
     }, error => {
-      console.log(error);
+     
     },
     () => {
       this.isLoading = false;

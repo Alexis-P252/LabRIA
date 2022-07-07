@@ -66,7 +66,7 @@ export class NoticiasComponent implements OnInit {
       
     this.noticiasServ.getAllNoticias(limit, offset).subscribe( data => {
       this.Noticias = data;
-      console.log(this.Noticias);
+      
       
       // Obtengo la cantidad de paginas
       this.nro_paginas = this.Noticias.size / this.limit;
@@ -234,7 +234,7 @@ export class NoticiasComponent implements OnInit {
     const file = event.target.files[0];
 
     if(!file){
-      console.log("ERROR: No se selecciono ninguna imagen");
+      
     }
     else{
       const reader = new FileReader();

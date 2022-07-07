@@ -175,7 +175,7 @@ export class MateriasComponent implements OnInit {
     });
     
     this.materiaSeleccionada = materia.id;
-    console.log(this.materiaSeleccionada);
+    
   }
 
   private getDismissReason(reason: any): string {
@@ -206,7 +206,7 @@ export class MateriasComponent implements OnInit {
       this.closeResult2 = `Dismissed ${this.getDismissReason(reason)}`;
     });
     this.MateriaEdit = JSON.parse(JSON.stringify(materia));
-    console.log(this.MateriaEdit);
+
     
   }
 

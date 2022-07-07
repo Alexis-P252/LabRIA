@@ -303,7 +303,7 @@ export class UnidadesCurricularesComponent implements OnInit {
     const file = event.target.files[0];
 
     if(!file){
-      console.log("ERROR: No se selecciono ningun documento");
+     
     }
     else{
       const reader = new FileReader();
@@ -378,8 +378,7 @@ public isCollapsed = true;
   open2(content2: any, unidad:UnidadCurricular) {
 
     this.unidadEdit =  JSON.parse(JSON.stringify(unidad));
-    console.log(this.unidadEdit.previas);
-    console.log(this.unidadEdit);  
+    
 
     this.modalService.open(content2, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult2 = `Closed with: ${result}`;

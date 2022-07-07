@@ -46,7 +46,7 @@ export class DocumentosComponent implements OnInit {
 
     this.documentosServ.getDocumentos(this.offset,this.limit).subscribe( data => {
       this.Documentos = data;
-      console.log(this.Documentos);
+      
     
 
       this.nro_paginas = this.Documentos.size / this.limit;
@@ -186,7 +186,7 @@ export class DocumentosComponent implements OnInit {
     const file = event.target.files[0];
 
     if(!file){
-      console.log("ERROR: No se selecciono ningun documento");
+      
     }
     else{
       const reader = new FileReader();
