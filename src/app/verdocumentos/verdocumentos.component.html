@@ -1,0 +1,58 @@
+<div class="container">
+    <h2 class="text-center mt-3" *ngIf="categoria =='OPORTUNIDADES_LABORALES'">Oportunidades Laborales</h2>
+    <h2 class="text-center mt-3" *ngIf="categoria =='INFORMACION_CARRERA'">Información de la carrera</h2>
+    <h2 class="text-center mt-3" *ngIf="categoria =='DATOS_DE_INTERES'">Datos de Interes</h2>
+    
+    <app-spinner *ngIf="isLoading == true"></app-spinner>
+
+    <div class="alert alert-info text-center mt-5" id="alertaVacio" role="alert" *ngIf="Documentos.length == 0" >
+        <strong>Vaya, parece que no hay nada para ver aquí</strong> 
+    </div>
+
+
+    <!--- Documento -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 contenedor" >
+        <div class="col" *ngFor="let documento of Documentos ">
+          <div class="card shadow-sm">
+            <div class="d-flex">
+              <div class="icono-container">
+                <div class="icono">
+                </div>
+              </div>
+  
+              <div
+                class="card-body p-3 justify-content-between d-flex flex-column"
+              >
+                <h5 class="card-text m-0 me-3">{{documento.titulo}}</h5>
+                <div class="d-flex">
+                  <a class="text-muted pdf me-2" (click)="openFullscreen(content, documento.documentoPDF)"> ->Doc PDF</a>  
+                  <div class="d-flex">
+                    <span *ngIf="documento.activo == true" class="badge bg-primary">Activo</span>
+                  </div>
+                </div>
+                <div class="" *ngIf="documento.tipo == 'DATOS_DE_INTERES'">Datos de Interes </div>
+                <div class="" *ngIf="documento.tipo == 'OPORTUNIDADES_LABORALES'">Oportunidades laborales</div>
+                <div class="" *ngIf="documento.tipo == 'INFORMACION_CARRERA'">Informacion de la carrera</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!--- Modal Ver PDF -->
+      <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title">Documento PDF</h4>
+          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+          <iframe type="application/pdf" [src]="sanitizePDF(pdf)" height="100%" width="100%"> </iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>
+        </div>
+      </ng-template>
+
+</div>
+

@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+      <img id="logo" href="#" routerLink="/" src="../../assets/logo_UTEC.png" alt=""> 
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" routerLink="/noticias">Noticias</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/documentos/INFORMACION_CARRERA">Informacion de la carrera</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/documentos/OPORTUNIDADES_LABORALES">Oportunidades laborales</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/documentos/DATOS_DE_INTERES">Datos de interes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" routerLink="/unidades_curriculares">Unidades curriculares</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="token != null" class="nav-link" routerLink="/materias">Materias</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="token != null" class="nav-link" routerLink="/doc_de_interes">Documentos de interes</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="cuenta">
+              <i class="fa fa-user"></i>
+            </div>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="#" routerLink="/login" *ngIf="token == null">Iniciar Sesion</a></li>
+            <li><a class="dropdown-item" href="#" (click)="logout()" *ngIf="token != null">Cerrar Sesión</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

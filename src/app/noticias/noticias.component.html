@@ -1,0 +1,140 @@
+<main>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <!-- Alertas -->
+      <div class="alert alert-success text-center" id="alertaSuccess" role="alert" >
+        <strong>{{alertSuccess}}</strong> 
+      </div>
+      <div class="alert alert-danger text-center" role="alert" id="alertaError" >
+        <strong>{{alertError}}</strong> 
+      </div>
+
+
+      <!-- Seccion agregar nueva noticia -->
+      <div class="col mb-4" *ngIf="token != null">
+        
+          <div class="d-flex justify-content-end mb-3">
+            <button type="button" class="btn btn-light bold" (click)="collapse.toggle()"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+              +Agregar nueva noticia
+            </button>
+
+          </div>
+        
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+          <div class="card" *ngIf="isLoading !== true">
+            <div class="card-body">
+           
+                <label for="titulo" class="col-sm-2 control-label mt-1">Título</label>
+                <input type="text" class="form-control" id="titulo" [(ngModel)]="NoticiaNew.titulo">
+  
+                <label for="descripcion" class="col-sm-2 control-label mt-1">Descripcion</label>
+                <input type="text" class="form-control" id="descripcion" [(ngModel)]="NoticiaNew.descripcion" >
+  
+                <label for="imagen" class="col-sm-2 control-label mt-1">Imágen</label>
+                <input type="file" class="form-control" id="imagen" accept="image/*" required (change)="handleUpload($event)">
+                <div class="err-empty-image" id="error-empty-image">Debes subir una imagen obligatoriamente</div>
+  
+                <label for="fecha" class="col-sm-2 control-label mt-1">Fecha de caducidad</label>
+                <input type="date" class="form-control" id="fecha" min="{{fecha_hoy | date:'yyyy-MM-dd' }}" [(ngModel)]="NoticiaNew.fechaCaducidad" >
+  
+                <div class="d-flex justify-content-center align-items-center">
+                  <button id="btnAgregarNoticia" class="btn btn-success mt-3" disabled (click)="addNoticia()" >Agregar</button>
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--- Loader -->
+
+      <app-spinner *ngIf="isLoading == true"></app-spinner>
+
+      <!--- Noticia -->
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        <div class="col" *ngFor="let noticia of Noticias.list ">
+          <div class="card shadow-sm">
+            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{noticia.imagen}}"/>
+            <div class="card-body">
+              <h5 class="card-text">{{noticia.titulo}}</h5>
+              <p class="card-text">{{noticia.descripcion.substring(0,150) + "..."}}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-success"
+                    routerLink="/noticia/{{noticia.id}}">Ver</button>
+                  <button type="button" class="btn btn-sm btn-outline-primary" (click)="open2(content2, noticia)" *ngIf="token != null">Editar</button>
+                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="open(content, noticia)" *ngIf="token != null">Eliminar</button>
+                </div>
+                <small class="text-muted">Caducidad: {{noticia.fechaCaducidad.substring(0,10)}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!--- Paginado -->
+      <div class=" d-flex justify-content-center align-items-center mt-3" *ngIf="paginas.length > 1">
+        Número de Pagina: 
+        <select class="ms-2" name="paginado" (change)="cambiarPagina($event.target)">
+          <option name="pagina" *ngFor="let p of paginas, let i = index" value="{{i+1}}">{{i+1}}</option>
+        </select> 
+      </div>
+      
+
+
+      <!--- Modal Eliminar -->
+      <ng-template  #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Eliminar noticia ID: {{this.id_seleccionada}}</h4>
+   
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="dateOfBirth">Estas por eliminar esta noticia, ¿estás seguro?</label>
+             
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="modal.close('Save click')" (click)="deleteNoticia()">Eliminar</button>
+        </div>
+      </ng-template>
+
+
+      <!--- Modal Editar -->
+      <ng-template #content2 let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Editar noticia ID: {{this.NoticiaEdit.id}}</h4>
+   
+        </div>
+        <div class="modal-body">
+          <label for="titulo" class="col-sm-2 control-label mt-1">Título</label>
+          <input type="text" class="form-control" id="titulo" [(ngModel)]="NoticiaEdit.titulo">
+
+          <label for="descripcion" class="col-sm-2 control-label mt-1">Descripcion</label>
+          <input type="text" class="form-control" id="descripcion" [(ngModel)]="NoticiaEdit.descripcion" >
+
+          <label for="imagen" class="col-sm-2 control-label mt-1">Imágen</label>
+          <input type="file" class="form-control" id="imagen" accept="image/*" (change)="handleUploadEdit($event)"  required [(ngModel)]="NoticiaEdit.imagen">
+          <div class="aviso-imagen" id="aviso-imagen">No subas una imagen si no quieres cambiarla ☝</div>
+
+          <label for="fecha" class="col control-label mt-1">Fecha de caducidad</label>
+          <input type="date" class="form-control" id="fecha" min="{{fecha_hoy | date:'yyyy-MM-dd' }}" value="{{NoticiaEdit.fechaCaducidad.substring(0,10) | date:'yyyy-MM-dd'}}" [(ngModel)]="NoticiaEdit.fechaCaducidad" >
+
+      
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="modal.close('Save click')" (click)="editNoticia()">Editar</button>
+        </div>
+      </ng-template>
+      
+
+    </div>
+  </div>
+</main>

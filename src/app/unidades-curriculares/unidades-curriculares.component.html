@@ -1,0 +1,351 @@
+<div class="container my-5">
+
+    <!-- Alertas -->
+    <div class="alert alert-success text-center" id="alertaSuccess" role="alert" >
+        <strong>{{alertSuccess}}</strong> 
+    </div>
+    <div class="alert alert-danger text-center" role="alert" id="alertaError" >
+        <strong>{{alertError}}</strong> 
+    </div>
+
+     <!-- Seccion agregar nueva unidad curricular -->
+     <div class="col mb-4" *ngIf="token != null">
+          
+        <div class="d-flex justify-content-end mb-3">
+          <button type="button" class="btn btn-light bold" (click)="collapse.toggle()"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+            +Agregar nueva unidad curricular
+          </button>
+        </div>
+      
+      <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+        <div class="card">
+          <div class="card-body">
+        
+              <label for="nombre" class="col-sm-2 control-label mt-1">Nombre</label>
+              <input type="text" class="form-control" id="nombre" [(ngModel)]="unidadNew.nombre">
+
+              <label for="descripcion" class="col-sm-2 control-label mt-1">Descripción</label>
+              <input type="text" class="form-control" id="descripcion" [(ngModel)]="unidadNew.descripcion" >
+
+              <label for="creditosMinimos" class="col-sm-2 control-label mt-1">Créditos Mínimos</label>
+              <input type="number" class="form-control" id="creditosMinimos" min="1" value="1" [(ngModel)]="unidadNew.creditos" >
+
+              <label for="semestre" class="col-sm-2 control-label mt-1">Semestre</label>
+              <input type="number" class="form-control" id="semestre" min="1" value="1" max="6" [(ngModel)]="unidadNew.semestre">
+
+              <label for="pdf" class="col-sm-2 control-label mt-1">Dócumento PDF</label>
+              <input type="file" class="form-control" id="pdf" accept="application/pdf" required (change)="handleUpload($event)" >
+              <div class="err-empty-pdf" id="error-empty-pdf">Debes subir un documento PDF obligatoriamente</div>
+
+              <label for="pdf" class="col-sm-2 control-label mt-1">Materia</label>
+              <select class="form-select" name="materia" [(ngModel)]="idMateria">
+                <option *ngFor="let m of materias" value="{{m.id}}">{{m.nombre}} </option>
+              </select>
+
+              <div class="d-flex justify-content-center align-items-center">
+                <button class="btn btn-success mt-3" id="btnAgregarUnidad" (click)="addUnidadCurricular()" >Agregar</button>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <ngb-accordion #acc="ngbAccordion">
+    
+        <ngb-panel title="Primer Semestre">
+          <ng-template ngbPanelContent>
+            <table class="table table-striped table-hover table-responsive">
+            <thead>
+            <tr>
+                <th scope="col" *ngIf="token != null">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Materia</th>
+                <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let s of semestre1">
+                <th scope="row" *ngIf="token != null">{{s.id}}</th>
+                <td>
+                    {{s.nombre}}
+                </td>
+                <td>{{s.materia.nombre}}</td>
+                <td>
+                    <div class="d-flex justify-content-end">
+                        <div class="btn-group">
+                            <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
+                            <button class="btn btn-primary" *ngIf="token != null" (click)="open2(content2, s)">Editar</button>
+                            <button class="btn btn-danger" *ngIf="token != null" (click)="open(content, s)">Eliminar</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+          </ng-template>
+        </ngb-panel>
+    
+        <ngb-panel title="Segundo Semestre">
+            <ng-template ngbPanelContent>
+                <table class="table table-striped table-hover table-responsive">
+                    <thead>
+                    <tr>
+                        <th scope="col" *ngIf="token != null">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Materia</th>
+                        <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let s of semestre2">
+                        <th scope="row" *ngIf="token != null">{{s.id}}</th>
+                        <td>
+                            {{s.nombre}}
+                        </td>
+                        <td>{{s.materia.nombre}}</td>
+                        <td>
+                            <div class="d-flex justify-content-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
+                                    <button class="btn btn-primary" *ngIf="token != null" (click)="open2(content2, s)">Editar</button>
+                                    <button class="btn btn-danger" *ngIf="token != null" (click)="open(content, s)">Eliminar</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
+            </ng-template>
+        </ngb-panel>
+    
+        <ngb-panel title="Tercer Semestre">
+            <ng-template ngbPanelContent>
+                <table class="table table-striped table-hover table-responsive">
+                    <thead>
+                    <tr>
+                        <th scope="col" *ngIf="token != null">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Materia</th>
+                        <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let s of semestre3">
+                        <th scope="row" *ngIf="token != null">{{s.id}}</th>
+                        <td>
+                            {{s.nombre}}
+                        </td>
+                        <td>{{s.materia.nombre}}</td>
+                        <td>
+                            <div class="d-flex justify-content-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
+                                    <button class="btn btn-primary" *ngIf="token != null" (click)="open2(content2, s)">Editar</button>
+                                    <button class="btn btn-danger" *ngIf="token != null" (click)="open(content, s)">Eliminar</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
+            </ng-template>
+        </ngb-panel>
+    
+        <ngb-panel title="Cuarto Semestre">
+            <ng-template ngbPanelContent>
+                <table class="table table-striped table-hover table-responsive">
+                    <thead>
+                    <tr>
+                        <th scope="col" *ngIf="token != null">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Materia</th>
+                        <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let s of semestre4">
+                        <th scope="row" *ngIf="token != null">{{s.id}}</th>
+                        <td>
+                            {{s.nombre}}
+                        </td>
+                        <td>{{s.materia.nombre}}</td>
+                        <td>
+                            <div class="d-flex justify-content-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
+                                    <button class="btn btn-primary" *ngIf="token != null" (click)="open2(content2, s)">Editar</button>
+                                    <button class="btn btn-danger" *ngIf="token != null" (click)="open(content, s)">Eliminar</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
+            </ng-template>
+        </ngb-panel>
+    
+        <ngb-panel title="Quinto Semestre">
+            <ng-template ngbPanelContent>
+                <table class="table table-striped table-hover table-responsive">
+                    <thead>
+                    <tr>
+                        <th scope="col" *ngIf="token != null">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Materia</th>
+                        <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let s of semestre5">
+                        <th scope="row" *ngIf="token != null">{{s.id}}</th>
+                        <td>
+                            {{s.nombre}}
+                        </td>
+                        <td>{{s.materia.nombre}}</td>
+                        <td>
+                            <div class="d-flex justify-content-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
+                                    <button class="btn btn-primary" *ngIf="token != null" (click)="open2(content2, s)">Editar</button>
+                                    <button class="btn btn-danger" *ngIf="token != null" (click)="open(content, s)">Eliminar</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
+            </ng-template>
+        </ngb-panel>
+    
+        <ngb-panel title="Sexto Semestre">
+            <ng-template ngbPanelContent>
+                <table class="table table-striped table-hover table-responsive">
+                    <thead>
+                    <tr>
+                        <th scope="col" *ngIf="token != null">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Materia</th>
+                        <th scope="col"> <div class="d-flex justify-content-end"> Acciones </div> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let s of semestre6">
+                        <th scope="row" *ngIf="token != null">{{s.id}}</th>
+                        <td>
+                            {{s.nombre}}
+                        </td>
+                        <td>{{s.materia.nombre}}</td>
+                        <td>
+                            <div class="d-flex justify-content-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-success" routerLink="/unidad/{{s.id}}">Ver</button>
+                                    <button class="btn btn-primary" *ngIf="token != null" (click)="open2(content2, s)" >Editar</button>
+                                    <button class="btn btn-danger" *ngIf="token != null" (click)="open(content, s)">Eliminar</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
+            </ng-template>
+        </ngb-panel>
+
+    </ngb-accordion>
+
+      <!--- Modal Eliminar -->
+      <ng-template  #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Eliminar Unidad Curricular ID: {{this.id_seleccionada}}</h4>
+   
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="dateOfBirth">Estas por eliminar esta unidad, ¿estás seguro?</label>
+             
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="modal.close('Save click')" (click)="deleteUnidadCurricular()">Eliminar</button>
+        </div>
+      </ng-template>
+
+
+       <!--- Modal Editar -->
+       <ng-template #content2 let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Editar Unidad Curricular ID: {{this.unidadEdit.id}}</h4>
+   
+        </div>
+        <div class="modal-body">
+          
+        
+          <ul ngbNav #nav="ngbNav" class="nav-tabs">
+            <li ngbNavItem>
+              <a ngbNavLink>Datos</a>
+              <ng-template ngbNavContent>
+                <label for="nombre" class="col-sm-2 control-label mt-1">Nombre</label>
+                <input type="text" class="form-control" id="nombre" [(ngModel)]="unidadEdit.nombre">
+
+                <label for="descripcion" class="col-sm-2 control-label mt-1">Descripcion</label>
+                <input type="text" class="form-control" id="descripcion" [(ngModel)]="unidadEdit.descripcion" >
+
+                <label for="creditos" class="col-sm-2 control-label mt-1">Créditos</label>
+                <input type="text" class="form-control" id="creditos" [(ngModel)]="unidadEdit.creditos" >
+
+                <label for="semestre" class="col-sm-2 control-label mt-1">Semestre</label>
+                <input type="text" class="form-control" id="semestre" [(ngModel)]="unidadEdit.semestre" >
+
+                <label for="pdf" class="col control-label mt-1">Documento PDF</label>
+                <input type="file" class="form-control" id="pdf" accept="application/pdf" (change)="handleUploadEdit($event)"  required [(ngModel)]="unidadEdit.documento">
+                <div class="aviso-imagen" id="aviso-imagen">No subas un documento si no quieres cambiarlo ☝</div>
+
+                <div class="d-flex justify-content-end align-items-center">
+                    <button type="button" class="btn btn-primary mt-2" (click)="modal.close('Save click')" (click)="editUnidadCurricular()">Editar</button>
+                </div>
+                
+              </ng-template>
+            </li>
+            <li ngbNavItem>
+              <a ngbNavLink>Previas</a>
+              <ng-template ngbNavContent>
+                <h5>Agregar previa</h5>
+                <select class="form-select" name="previas" [(ngModel)]="previa_seleccionada">
+                    <option *ngFor="let p of unidades" value="{{p.id}}">{{p.nombre}}</option>
+                </select>
+                <p class="mt-2">Elige el tipo de previa</p>
+                <select class="form-select" name="tipoPrevia" [(ngModel)]="tipoPrevia">
+                    <option value="Examen" selected>Examen</option>
+                    <option value="Curso">Curso</option>
+                </select>
+                <small> <b>El tipo de previa por defecto es Examen</b></small>
+                <div class="d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-primary mt-2" (click)="addPrevia()" (click)="modal.close('Save click')">Agregar</button>
+                </div>
+                <hr>
+                <h5>Eliminar Previa</h5>
+                <select class="form-select" name="previasEliminar" [(ngModel)]="previa_seleccionada_delete">
+                    <option *ngFor="let p of unidadEdit.previas"  value="{{p.id}}">{{p.previa.nombre}}</option>
+                </select>
+                
+
+                <div class="d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-danger mt-2" (click)="deletePrevia()" (click)="modal.close('Save click')">Eliminar</button>
+                </div>
+              </ng-template>
+            </li>
+          </ul>
+          
+          <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+        </div>
+        <div class="modal-footer">
+          
+        </div>
+      </ng-template>
+
+    </div>  

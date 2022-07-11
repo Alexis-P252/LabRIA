@@ -1,0 +1,15 @@
+.home{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mensaje-container{
+  margin: 10px;
+}
+
+
+.home{
+  min-height: calc(100vh - 344px);
+}

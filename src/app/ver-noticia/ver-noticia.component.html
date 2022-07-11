@@ -1,0 +1,17 @@
+<app-spinner *ngIf="isLoading == true"></app-spinner>
+
+<div class="container">
+  <div class="row imagen mt-4">
+    <img src="{{Noticia.imagen}}" >
+
+  </div>
+  <div class="row titulo">
+    <h1 class="text-center mt-4">{{Noticia.titulo}}</h1>
+
+  </div>
+  <div class="row descripcion">
+    <p>{{Noticia.descripcion}}</p>
+    
+  </div>
+
+</div>

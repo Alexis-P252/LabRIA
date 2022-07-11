@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  api_url: " https://gr4-ria2022.test.softtero.com/api/"
+  //api_url: " https://ria2022.test.softtero.com/api/"
+
 };
 
 /*

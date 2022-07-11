@@ -1,0 +1,35 @@
+.bold{
+    font-weight: 600;
+}
+
+.btn-light:hover {
+    background: rgb(230, 230, 230);
+}
+
+.container{
+    min-height: calc(100vh - 440px);
+}
+
+
+.err-empty-image{
+    color: red;
+    font-size: 15px;
+    font-weight: 600;
+    display: block;
+}
+
+.aviso-pdf{
+    color: blue;
+    font-size: 15px;
+    font-weight: 600;
+    display: block;
+}
+
+.alert{
+    display: none;
+}
+
+
+.card-body{
+    min-height: 250px;
+}

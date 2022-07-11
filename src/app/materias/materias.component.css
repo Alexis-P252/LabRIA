@@ -1,0 +1,29 @@
+.icono-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 160px;
+    height: 160px;
+}
+
+.icono{
+    color: black !important;
+    font-size: 24px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img{
+    width: 50%;
+    height: auto;
+}
+
+.contenedor{
+    min-height: calc(100vh - 424px);
+}
+
+.alert{
+    display: none;
+}

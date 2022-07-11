@@ -1,0 +1,16 @@
+<app-spinner *ngIf="isLoading == true"></app-spinner>
+
+<ngb-carousel class="carrousel">
+
+    <ng-template ngbSlide *ngFor="let activa of Activas">
+      <div class="picsum-img-wrapper">
+        <img *ngIf="activa.imagen.length < 100" src="../../../assets/paisaje.jpg" alt="Random first slide" width="100%" height="auto" >
+        <img *ngIf="activa.imagen.length > 100" src="{{activa.imagen}}" alt="Random first slide" width="100%" height="auto">
+      </div>
+      <div class="carousel-caption">
+        <h3>{{activa.titulo}}</h3>
+        <button class="btn btn-light" routerLink="/noticia/{{activa.id}}">Ver</button>
+      </div>
+    </ng-template>
+    
+  </ngb-carousel>
